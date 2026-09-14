@@ -1,33 +1,64 @@
-import { useCallback } from 'react';
+import { useCallback, useMemo } from 'react';
 import {
   ReactFlow,
-  MiniMap,
   Controls,
   Background,
   addEdge,
 } from '@xyflow/react';
 import '@xyflow/react/dist/style.css';
+import { StockNode, FlowNode, AuxNode } from './CustomNodes';
+import { Layers, ArrowRightLeft, Variable } from 'lucide-react';
 
-export default function DiagramCanvas({ onNodesChangeExt, onEdgesChangeExt, nodesExt, edgesExt, setNodesExt, setEdgesExt }) {
+export default function DiagramCanvas({ onNodesChangeExt, onEdgesChangeExt, nodesExt, edgesExt, setEdgesExt }) {
+  const nodeTypes = useMemo(() => ({
+    stock: StockNode,
+    flow: FlowNode,
+    auxiliary: AuxNode,
+  }), []);
+
   const onConnect = useCallback(
     (params) => setEdgesExt((eds) => addEdge({ ...params, animated: true }, eds)),
     [setEdgesExt],
   );
 
   return (
-    <div className="w-full h-full bg-slate-950/50">
+    <div className="relative w-full h-full bg-[#080C14] overflow-hidden">
       <ReactFlow
         nodes={nodesExt}
         edges={edgesExt}
+        nodeTypes={nodeTypes}
         onNodesChange={onNodesChangeExt}
         onEdgesChange={onEdgesChangeExt}
         onConnect={onConnect}
         colorMode="dark"
         fitView
+        fitViewOptions={{ padding: 0.25 }}
+        minZoom={0.5}
+        maxZoom={1.75}
       >
-        <Controls />
-        <Background variant="dots" gap={12} size={1} />
+        <Controls showInteractive={false} />
+        <Background variant="dots" gap={18} size={1} color="rgba(255, 255, 255, 0.08)" />
       </ReactFlow>
+
+      {/* Legend Badge */}
+      <div className="absolute bottom-4 left-4 z-10 flex items-center gap-3 rounded-xl border border-white/10 bg-slate-900/85 px-3 py-2 text-[11px] font-medium text-slate-400 shadow-xl backdrop-blur-md">
+        <span className="text-slate-500 font-semibold uppercase tracking-wider text-[10px]">Leyenda:</span>
+        <div className="flex items-center gap-1.5 text-blue-400">
+          <Layers className="h-3 w-3" />
+          <span>Nivel</span>
+        </div>
+        <div className="h-3 w-[1px] bg-white/10" />
+        <div className="flex items-center gap-1.5 text-emerald-400">
+          <ArrowRightLeft className="h-3 w-3" />
+          <span>Flujo</span>
+        </div>
+        <div className="h-3 w-[1px] bg-white/10" />
+        <div className="flex items-center gap-1.5 text-purple-400">
+          <Variable className="h-3 w-3" />
+          <span>Auxiliar</span>
+        </div>
+      </div>
     </div>
   );
 }
+

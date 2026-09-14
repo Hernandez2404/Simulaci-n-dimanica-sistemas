@@ -1,85 +1,233 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { BookOpen, X, Play, CheckCircle2, Layers, ArrowRightLeft, Variable } from 'lucide-react';
 
-export default function ExercisesModal({ isOpen, onClose }) {
+const EXERCISES = [
+  {
+    id: 'poblacion',
+    title: 'Ejercicio 5.1: Modelo Poblacional (Malthus / Forrester)',
+    category: 'Crecimiento Exponencial',
+    badgeColor: 'blue',
+    statement: 'Estudia la evolución de una población cerrada con 1,000 habitantes iniciales. Los nacimientos son proporcionales a la población según una tasa de natalidad constante del 5% anual, mientras que las defunciones dependen de una esperanza de vida promedio de 100 años.',
+    elements: {
+      stocks: 'Población (1000 hab)',
+      inflow: 'Nacimientos = Población × Tasa_Natalidad (0.05)',
+      outflow: 'Defunciones = Población ÷ Esperanza_Vida (100)',
+      aux: 'Tasa_Natalidad = 0.05, Esperanza_Vida = 100 años'
+    },
+    analysis: 'Al ser la tasa de natalidad (5%) mayor que la tasa bruta de mortalidad (1% = 1/100), la tasa neta de crecimiento es del +4% anual. Esto genera un bucle de realimentación positiva que produce un crecimiento exponencial acelerado de la población.',
+    modelId: 'poblacion'
+  },
+  {
+    id: 'helpdesk',
+    title: 'Ejercicio 5.2: Mesa de Ayuda (Help Desk TI)',
+    category: 'Comportamiento Lineal',
+    badgeColor: 'emerald',
+    statement: 'Un departamento de soporte de TI tiene inicialmente 50 tickets sin resolver. Cada día, los usuarios reportan 20 nuevos problemas (Tasa de Llegada). Por su parte, el equipo de técnicos logra resolver 25 problemas al día (Tasa de Resolución). Si estas tasas se mantienen constantes, ¿qué sucederá con el número de tickets sin resolver al cabo de unos días?',
+    elements: {
+      stocks: 'Tickets Pendientes (50 tickets iniciales)',
+      inflow: 'Llegada de Tickets (20 tickets/día constante)',
+      outflow: 'Resolución de Tickets (25 tickets/día constante)',
+      aux: 'Tasa_Llegada = 20, Tasa_Resolucion = 25'
+    },
+    analysis: 'Al ser el flujo de salida (25 tickets/día) estrictamente mayor que el flujo de entrada (20 tickets/día), la acumulación neta es negativa (-5 tickets/día). El sistema exhibe un decremento lineal que agota todos los tickets pendientes exactamente en 10 días.',
+    modelId: 'helpdesk'
+  },
+  {
+    id: 'inventario',
+    title: 'Ejercicio 5.3: Gestión de Inventario',
+    category: 'Bucle Negativo / Equilibrio',
+    badgeColor: 'purple',
+    statement: 'Una bodega de almacén comienza el mes con 500 pares de zapatos. Todos los días ingresan 50 pares nuevos directamente desde la fábrica a un ritmo constante. Sin embargo, la tienda vende diariamente el 15% de todo el inventario que tenga disponible en ese momento en la bodega. ¿Cómo se comportará el inventario a lo largo del tiempo?',
+    elements: {
+      stocks: 'Inventario (500 pares)',
+      inflow: 'Envíos de Fábrica (50 pares/día)',
+      outflow: 'Ventas = Inventario × 0.15 (15% del inventario)',
+      aux: 'Fracción_Ventas = 0.15'
+    },
+    analysis: 'Dado que las ventas dependen directamente del nivel de inventario actual, se forma un bucle de retroalimentación negativa que busca el equilibrio (homeostasis). Inicialmente salen 75 (15% de 500) y entran 50, provocando que el stock disminuya con pendiente decreciente hasta estabilizarse en 333.3 unidades (donde Entradas = Salidas).',
+    modelId: 'inventario'
+  }
+];
+
+export default function ExercisesModal({ isOpen, onClose, onSelectExercise, currentModelId }) {
+  const [selectedExerciseId, setSelectedExerciseId] = useState('poblacion');
+
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (e.key === 'Escape') onClose();
+    };
+    if (isOpen) window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [isOpen, onClose]);
+
   if (!isOpen) return null;
 
+  const currentExercise = EXERCISES.find(e => e.id === selectedExerciseId) || EXERCISES[0];
+
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4">
-      <div className="bg-slate-900 border border-slate-700 rounded-2xl w-full max-w-3xl max-h-[90vh] overflow-hidden flex flex-col shadow-2xl">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/75 backdrop-blur-sm p-4 animate-in fade-in duration-200">
+      <div 
+        className="relative flex flex-col w-full max-w-4xl max-h-[88vh] rounded-2xl border border-white/10 bg-[#0C1222] shadow-2xl overflow-hidden"
+        onClick={(e) => e.stopPropagation()}
+      >
         {/* Header */}
-        <div className="flex items-center justify-between p-5 border-b border-slate-800">
-          <h2 className="text-xl font-bold text-slate-100 flex items-center gap-2">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-blue-500"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path></svg>
-            Ejercicios Prácticos
-          </h2>
-          <button onClick={onClose} className="text-slate-400 hover:text-white transition-colors">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        <div className="flex items-center justify-between border-b border-white/10 px-6 py-4 bg-slate-900/40">
+          <div className="flex items-center gap-3">
+            <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-blue-500/20 text-blue-400 ring-1 ring-blue-500/30">
+              <BookOpen className="h-5 w-5" />
+            </div>
+            <div>
+              <h2 className="text-base font-semibold text-slate-100">Guía de Ejercicios Prácticos</h2>
+              <p className="text-xs text-slate-400">Problemas clásicos y análisis formal de Dinámica de Sistemas</p>
+            </div>
+          </div>
+          <button 
+            onClick={onClose}
+            className="flex h-8 w-8 items-center justify-center rounded-lg border border-white/10 text-slate-400 hover:bg-white/10 hover:text-slate-100 transition-colors"
+          >
+            <X className="h-4 w-4" />
           </button>
         </div>
-        
-        {/* Content */}
-        <div className="flex-1 min-h-0 p-6 overflow-y-auto no-scrollbar flex flex-col gap-6">
-          <ExerciseCard 
-            title="Ejercicio Adicional: Mesa de Ayuda (Help Desk)"
-            statement="Un departamento de soporte de TI tiene inicialmente 50 tickets sin resolver. Cada día, los usuarios reportan 20 nuevos problemas (Tasa de Llegada). Por su parte, el equipo de técnicos logra resolver 25 problemas al día (Tasa de Resolución). Si estas tasas se mantienen constantes, ¿qué sucederá con el número de tickets sin resolver al cabo de unos días?"
-            answer="Elementos: Tickets Pendientes (Nivel), Llegada de Tickets (Flujo de entrada), Resolución de Tickets (Flujo de salida). Al ser el flujo de salida (25) mayor que el flujo de entrada (20), el nivel disminuirá de forma lineal (5 tickets menos cada día). Al cabo de 10 días, el nivel de tickets sin resolver llegará a 0 y se habrá agotado el trabajo pendiente."
-          />
 
-          <ExerciseCard 
-            title="Ejercicio Adicional: Gestión de Inventario (Bucle Negativo)"
-            statement="Una bodega de almacén comienza el mes con 500 pares de zapatos. Todos los días ingresan 50 pares nuevos directamente desde la fábrica a un ritmo constante. Sin embargo, la tienda es muy popular y vende diariamente el 15% de todo el inventario que tenga disponible en ese momento en la bodega. ¿Cómo se comportará el inventario a lo largo del tiempo?"
-            answer="Elementos: Inventario (Nivel), Envíos de Fábrica (Flujo de entrada), Ventas (Flujo de salida). Como las ventas dependen del inventario actual (0.15 * Inventario), se trata de un bucle de retroalimentación negativa. Inicialmente entran 50 y salen 75 (15% de 500), así que el inventario bajará. Con el tiempo se estabilizará (comportamiento asintótico) en el punto donde las Entradas = Salidas, lo cual sucederá cuando el 15% del inventario sea igual a 50 (Inventario en equilibrio = 333.3 pares)."
-          />
+        {/* Body Layout: Sidebar Tabs + Content Area */}
+        <div className="flex flex-1 min-h-0 overflow-hidden">
+          {/* Exercises Navigation Tabs */}
+          <div className="w-64 border-r border-white/10 bg-slate-950/40 p-3 space-y-1.5 overflow-y-auto">
+            <span className="px-3 py-1 text-[10px] font-semibold uppercase tracking-wider text-slate-500 block">
+              Catálogo de Casos
+            </span>
+            {EXERCISES.map((ex) => {
+              const isSelected = ex.id === selectedExerciseId;
+              const isCurrentActive = ex.modelId === currentModelId;
+
+              return (
+                <button
+                  key={ex.id}
+                  onClick={() => setSelectedExerciseId(ex.id)}
+                  className={`w-full text-left p-3 rounded-xl border transition-all duration-150 cursor-pointer ${
+                    isSelected
+                      ? 'border-blue-500/40 bg-blue-500/10 text-slate-100 shadow-md shadow-blue-950/30'
+                      : 'border-transparent text-slate-400 hover:bg-slate-900/50 hover:text-slate-200'
+                  }`}
+                >
+                  <div className="flex items-center justify-between mb-1">
+                    <span className="text-[10px] uppercase font-semibold text-blue-400 tracking-wider">
+                      {ex.category}
+                    </span>
+                    {isCurrentActive && (
+                      <span className="text-[9px] bg-emerald-500/20 text-emerald-300 px-1.5 py-0.5 rounded border border-emerald-500/30 font-mono">
+                        Activo
+                      </span>
+                    )}
+                  </div>
+                  <div className="text-xs font-semibold leading-snug text-slate-200 line-clamp-2">
+                    {ex.title}
+                  </div>
+                </button>
+              );
+            })}
+          </div>
+
+          {/* Exercise Content Detail */}
+          <div className="flex-1 p-6 overflow-y-auto space-y-5 bg-gradient-to-b from-slate-900/20 to-transparent">
+            <div>
+              <div className="flex items-center gap-2 mb-1.5">
+                <span className="text-xs font-semibold text-blue-400 uppercase tracking-wider bg-blue-500/10 px-2.5 py-0.5 rounded-full border border-blue-500/20">
+                  {currentExercise.category}
+                </span>
+              </div>
+              <h3 className="text-lg font-bold text-slate-100 tracking-tight">
+                {currentExercise.title}
+              </h3>
+            </div>
+
+            {/* Statement */}
+            <div className="rounded-xl border border-white/10 bg-slate-900/60 p-4 space-y-1.5">
+              <span className="text-[11px] font-semibold uppercase tracking-wider text-slate-400 flex items-center gap-1.5">
+                <BookOpen className="h-3.5 w-3.5 text-blue-400" />
+                Enunciado del Problema
+              </span>
+              <p className="text-sm text-slate-200 leading-relaxed">
+                {currentExercise.statement}
+              </p>
+            </div>
+
+            {/* Elements breakdown */}
+            <div className="rounded-xl border border-white/10 bg-slate-900/60 p-4 space-y-3">
+              <span className="text-[11px] font-semibold uppercase tracking-wider text-slate-400 block">
+                Estructura y Ecuaciones de Forrester
+              </span>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-xs">
+                <div className="flex items-start gap-2 p-2 rounded-lg bg-slate-950/60 border border-white/5">
+                  <Layers className="h-4 w-4 text-blue-400 shrink-0 mt-0.5" />
+                  <div>
+                    <span className="text-[10px] text-slate-400 uppercase font-semibold block">Nivel (Stock)</span>
+                    <span className="font-mono text-slate-200">{currentExercise.elements.stocks}</span>
+                  </div>
+                </div>
+                <div className="flex items-start gap-2 p-2 rounded-lg bg-slate-950/60 border border-white/5">
+                  <ArrowRightLeft className="h-4 w-4 text-emerald-400 shrink-0 mt-0.5" />
+                  <div>
+                    <span className="text-[10px] text-slate-400 uppercase font-semibold block">Flujo de Entrada</span>
+                    <span className="font-mono text-slate-200">{currentExercise.elements.inflow}</span>
+                  </div>
+                </div>
+                <div className="flex items-start gap-2 p-2 rounded-lg bg-slate-950/60 border border-white/5">
+                  <ArrowRightLeft className="h-4 w-4 text-rose-400 shrink-0 mt-0.5" />
+                  <div>
+                    <span className="text-[10px] text-slate-400 uppercase font-semibold block">Flujo de Salida</span>
+                    <span className="font-mono text-slate-200">{currentExercise.elements.outflow}</span>
+                  </div>
+                </div>
+                <div className="flex items-start gap-2 p-2 rounded-lg bg-slate-950/60 border border-white/5">
+                  <Variable className="h-4 w-4 text-purple-400 shrink-0 mt-0.5" />
+                  <div>
+                    <span className="text-[10px] text-slate-400 uppercase font-semibold block">Variables Auxiliares</span>
+                    <span className="font-mono text-slate-200">{currentExercise.elements.aux}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Analytical Resolution */}
+            <div className="rounded-xl border border-emerald-500/25 bg-emerald-950/15 p-4 space-y-1.5">
+              <span className="text-[11px] font-semibold uppercase tracking-wider text-emerald-400 flex items-center gap-1.5">
+                <CheckCircle2 className="h-3.5 w-3.5" />
+                Respuesta y Análisis Dinámico
+              </span>
+              <p className="text-xs text-slate-300 leading-relaxed">
+                {currentExercise.analysis}
+              </p>
+            </div>
+          </div>
+        </div>
+
+        {/* Footer */}
+        <div className="flex items-center justify-between border-t border-white/10 px-6 py-3.5 bg-slate-950/60">
+          <span className="text-xs text-slate-400">
+            Presiona <kbd className="px-1.5 py-0.5 rounded border border-white/10 bg-slate-900 font-mono text-[10px]">Esc</kbd> para cerrar
+          </span>
+          <div className="flex items-center gap-3">
+            <button
+              onClick={onClose}
+              className="px-4 py-2 rounded-xl border border-white/10 bg-slate-900 hover:bg-slate-800 text-xs font-semibold text-slate-300 transition-colors"
+            >
+              Cerrar
+            </button>
+            <button
+              onClick={() => {
+                if (onSelectExercise) onSelectExercise(currentExercise.modelId);
+                onClose();
+              }}
+              className="flex items-center gap-2 px-4 py-2 rounded-xl bg-blue-600 hover:bg-blue-500 active:scale-95 text-xs font-semibold text-white shadow-lg shadow-blue-500/25 transition-all"
+            >
+              <Play className="h-3.5 w-3.5 fill-current" />
+              Cargar este modelo en el Simulador
+            </button>
+          </div>
         </div>
       </div>
     </div>
   );
 }
 
-function ExerciseCard({ title, statement, answer }) {
-  const [showAnswer, setShowAnswer] = useState(false);
-
-  return (
-    <div className="bg-slate-950/50 border border-slate-800 rounded-xl p-5 relative overflow-hidden flex flex-col h-[280px]">
-      <div className={`absolute top-0 left-0 w-1 h-full ${showAnswer ? 'bg-emerald-500' : 'bg-blue-500'}`}></div>
-      <h3 className="text-lg font-semibold text-blue-400 mb-3 shrink-0">{title}</h3>
-      
-      <div className="flex-1 overflow-y-auto no-scrollbar pr-2">
-        {!showAnswer ? (
-          <div className="text-slate-300 text-sm leading-relaxed">
-            <strong className="text-slate-400 uppercase text-xs tracking-wider block mb-1">Enunciado:</strong>
-            {statement}
-          </div>
-        ) : (
-          <div className="bg-slate-800 border-l-4 border-emerald-500 rounded-r-lg p-4 text-slate-100 text-sm leading-relaxed shadow-inner">
-            <strong className="text-emerald-400 uppercase text-xs tracking-wider block mb-2">Respuesta y Análisis:</strong>
-            {answer}
-          </div>
-        )}
-      </div>
-      
-      <div className="pt-4 mt-2 border-t border-slate-800 shrink-0">
-        <button 
-          onClick={() => setShowAnswer(!showAnswer)}
-          className={`flex items-center justify-center gap-2 text-sm font-medium transition-colors border px-4 py-2 rounded-lg w-full ${
-            showAnswer 
-              ? 'bg-slate-800 border-slate-600 text-slate-200 hover:bg-slate-700' 
-              : 'bg-blue-900/30 border-blue-800/50 text-blue-300 hover:bg-blue-800/40'
-          }`}
-        >
-          {showAnswer ? (
-             <>
-               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg>
-               Volver al Enunciado
-             </>
-          ) : (
-            <>
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
-              Ver Solución
-            </>
-          )}
-        </button>
-      </div>
-    </div>
-  );
-}

@@ -26,3 +26,7 @@ dist-ssr
 # Worktrees (superpowers)
 .worktrees/
 worktrees/
+
+# Python cache
+__pycache__/
+*.py[cod]
