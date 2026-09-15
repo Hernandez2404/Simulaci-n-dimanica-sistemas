@@ -344,17 +344,8 @@ export default function App() {
                 <div className="space-y-3 font-sans text-xs">
                   {selectedModelId === 'poblacion' ? (
                     <>
-                      <div className="flex items-center justify-between">
-                        <span className="text-[11px] text-slate-400 font-medium">
-                          Origen analítico de la fórmula de población (Malthus / Forrester):
-                        </span>
-                        <button
-                          onClick={() => setIsDeductionModalOpen(true)}
-                          className="flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-wider text-purple-300 hover:text-white bg-purple-500/20 hover:bg-purple-500/30 px-2.5 py-1 rounded-lg border border-purple-500/30 transition-all cursor-pointer"
-                        >
-                          <Sigma className="h-3 w-3" />
-                          <span>Demostración Completa & Comparativa</span>
-                        </button>
+                      <div className="text-[11px] text-slate-400 font-medium mb-0.5">
+                        Origen analítico de la fórmula de población (Malthus / Forrester):
                       </div>
 
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-xs">
