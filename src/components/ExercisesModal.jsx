@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { BookOpen, X, Play, CheckCircle2, Layers, ArrowRightLeft, Variable, Sigma } from 'lucide-react';
+import { BookOpen, X, Play, CheckCircle2, Layers, ArrowRightLeft, Variable, Sigma, Bot } from 'lucide-react';
 
 const EXERCISES = [
   {
@@ -82,25 +82,30 @@ export default function ExercisesModal({ isOpen, onClose, onSelectExercise, curr
   const currentExercise = EXERCISES.find(e => e.id === selectedExerciseId) || EXERCISES[0];
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/75 backdrop-blur-sm p-4 animate-in fade-in duration-200">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm p-4 animate-in fade-in duration-200">
       <div 
-        className="relative flex flex-col w-full max-w-4xl max-h-[88vh] rounded-2xl border border-white/10 bg-[#0C1222] shadow-2xl overflow-hidden"
+        className="relative flex flex-col w-full max-w-4xl max-h-[88vh] rounded-2xl border border-slate-200 dark:border-white/10 bg-white dark:bg-[#0C1222] text-slate-900 dark:text-slate-100 shadow-2xl overflow-hidden transition-colors"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Header */}
-        <div className="flex items-center justify-between border-b border-white/10 px-6 py-4 bg-slate-900/40">
+        <div className="flex items-center justify-between border-b border-slate-200 dark:border-white/10 px-6 py-4 bg-slate-50 dark:bg-slate-900/40">
           <div className="flex items-center gap-3">
-            <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-blue-500/20 text-blue-400 ring-1 ring-blue-500/30">
+            <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-blue-500/15 dark:bg-blue-500/20 text-blue-600 dark:text-blue-400 ring-1 ring-blue-500/30">
               <BookOpen className="h-5 w-5" />
             </div>
             <div>
-              <h2 className="text-base font-semibold text-slate-100">Guía de Ejercicios Prácticos</h2>
-              <p className="text-xs text-slate-400">Problemas clásicos y análisis formal de Dinámica de Sistemas</p>
+              <div className="flex items-center gap-2">
+                <h2 className="text-base font-semibold text-slate-900 dark:text-slate-100">Guía de Ejercicios Prácticos</h2>
+                <span className="flex items-center gap-1 text-[10px] font-semibold text-purple-600 dark:text-purple-300 bg-purple-100 dark:bg-purple-950/50 px-2 py-0.5 rounded-full border border-purple-200 dark:border-purple-500/30">
+                  <Bot className="h-3 w-3" /> IA
+                </span>
+              </div>
+              <p className="text-xs text-slate-500 dark:text-slate-400">Problemas clásicos y análisis formal de Dinámica de Sistemas</p>
             </div>
           </div>
           <button 
             onClick={onClose}
-            className="flex h-8 w-8 items-center justify-center rounded-lg border border-white/10 text-slate-400 hover:bg-white/10 hover:text-slate-100 transition-colors"
+            className="flex h-8 w-8 items-center justify-center rounded-lg border border-slate-200 dark:border-white/10 text-slate-400 hover:bg-slate-100 dark:hover:bg-white/10 hover:text-slate-700 dark:hover:text-slate-100 transition-colors cursor-pointer"
           >
             <X className="h-4 w-4" />
           </button>
@@ -109,8 +114,8 @@ export default function ExercisesModal({ isOpen, onClose, onSelectExercise, curr
         {/* Body Layout: Sidebar Tabs + Content Area */}
         <div className="flex flex-1 min-h-0 overflow-hidden">
           {/* Exercises Navigation Tabs */}
-          <div className="w-64 border-r border-white/10 bg-slate-950/40 p-3 space-y-1.5 overflow-y-auto">
-            <span className="px-3 py-1 text-[10px] font-semibold uppercase tracking-wider text-slate-500 block">
+          <div className="w-64 border-r border-slate-200 dark:border-white/10 bg-slate-50/60 dark:bg-slate-950/40 p-3 space-y-1.5 overflow-y-auto">
+            <span className="px-3 py-1 text-[10px] font-semibold uppercase tracking-wider text-slate-400 dark:text-slate-500 block">
               Catálogo de Casos
             </span>
             {EXERCISES.map((ex) => {
@@ -123,21 +128,21 @@ export default function ExercisesModal({ isOpen, onClose, onSelectExercise, curr
                   onClick={() => setSelectedExerciseId(ex.id)}
                   className={`w-full text-left p-3 rounded-xl border transition-all duration-150 cursor-pointer ${
                     isSelected
-                      ? 'border-blue-500/40 bg-blue-500/10 text-slate-100 shadow-md shadow-blue-950/30'
-                      : 'border-transparent text-slate-400 hover:bg-slate-900/50 hover:text-slate-200'
+                      ? 'border-blue-500/50 bg-blue-50 dark:bg-blue-500/10 text-slate-900 dark:text-slate-100 shadow-sm'
+                      : 'border-transparent text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-900/50 hover:text-slate-900 dark:hover:text-slate-200'
                   }`}
                 >
                   <div className="flex items-center justify-between mb-1">
-                    <span className="text-[10px] uppercase font-semibold text-blue-400 tracking-wider">
+                    <span className="text-[10px] uppercase font-semibold text-blue-600 dark:text-blue-400 tracking-wider">
                       {ex.category}
                     </span>
                     {isCurrentActive && (
-                      <span className="text-[9px] bg-emerald-500/20 text-emerald-300 px-1.5 py-0.5 rounded border border-emerald-500/30 font-mono">
+                      <span className="text-[9px] bg-emerald-100 dark:bg-emerald-500/20 text-emerald-700 dark:text-emerald-300 px-1.5 py-0.5 rounded border border-emerald-300 dark:border-emerald-500/30 font-mono">
                         Activo
                       </span>
                     )}
                   </div>
-                  <div className="text-xs font-semibold leading-snug text-slate-200 line-clamp-2">
+                  <div className="text-xs font-semibold leading-snug text-slate-800 dark:text-slate-200 line-clamp-2">
                     {ex.title}
                   </div>
                 </button>
@@ -146,61 +151,61 @@ export default function ExercisesModal({ isOpen, onClose, onSelectExercise, curr
           </div>
 
           {/* Exercise Content Detail */}
-          <div className="flex-1 p-6 overflow-y-auto space-y-5 bg-gradient-to-b from-slate-900/20 to-transparent">
+          <div className="flex-1 p-6 overflow-y-auto space-y-5 bg-white dark:bg-gradient-to-b dark:from-slate-900/20 dark:to-transparent">
             <div>
               <div className="flex items-center gap-2 mb-1.5">
-                <span className="text-xs font-semibold text-blue-400 uppercase tracking-wider bg-blue-500/10 px-2.5 py-0.5 rounded-full border border-blue-500/20">
+                <span className="text-xs font-semibold text-blue-600 dark:text-blue-400 uppercase tracking-wider bg-blue-100 dark:bg-blue-500/10 px-2.5 py-0.5 rounded-full border border-blue-200 dark:border-blue-500/20">
                   {currentExercise.category}
                 </span>
               </div>
-              <h3 className="text-lg font-bold text-slate-100 tracking-tight">
+              <h3 className="text-lg font-bold text-slate-900 dark:text-slate-100 tracking-tight">
                 {currentExercise.title}
               </h3>
             </div>
 
             {/* Statement */}
-            <div className="rounded-xl border border-white/10 bg-slate-900/60 p-4 space-y-1.5">
-              <span className="text-[11px] font-semibold uppercase tracking-wider text-slate-400 flex items-center gap-1.5">
-                <BookOpen className="h-3.5 w-3.5 text-blue-400" />
+            <div className="rounded-xl border border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-slate-900/60 p-4 space-y-1.5">
+              <span className="text-[11px] font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400 flex items-center gap-1.5">
+                <BookOpen className="h-3.5 w-3.5 text-blue-600 dark:text-blue-400" />
                 Enunciado del Problema
               </span>
-              <p className="text-sm text-slate-200 leading-relaxed">
+              <p className="text-sm text-slate-700 dark:text-slate-200 leading-relaxed">
                 {currentExercise.statement}
               </p>
             </div>
 
             {/* Elements breakdown */}
-            <div className="rounded-xl border border-white/10 bg-slate-900/60 p-4 space-y-3">
-              <span className="text-[11px] font-semibold uppercase tracking-wider text-slate-400 block">
+            <div className="rounded-xl border border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-slate-900/60 p-4 space-y-3">
+              <span className="text-[11px] font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400 block">
                 Estructura y Ecuaciones de Forrester
               </span>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-xs">
-                <div className="flex items-start gap-2 p-2 rounded-lg bg-slate-950/60 border border-white/5">
-                  <Layers className="h-4 w-4 text-blue-400 shrink-0 mt-0.5" />
+                <div className="flex items-start gap-2 p-2 rounded-lg bg-white dark:bg-slate-950/60 border border-slate-200 dark:border-white/5 shadow-xs">
+                  <Layers className="h-4 w-4 text-blue-600 dark:text-blue-400 shrink-0 mt-0.5" />
                   <div>
-                    <span className="text-[10px] text-slate-400 uppercase font-semibold block">Nivel (Stock)</span>
-                    <span className="font-mono text-slate-200">{currentExercise.elements.stocks}</span>
+                    <span className="text-[10px] text-slate-500 dark:text-slate-400 uppercase font-semibold block">Nivel (Stock)</span>
+                    <span className="font-mono text-slate-800 dark:text-slate-200">{currentExercise.elements.stocks}</span>
                   </div>
                 </div>
-                <div className="flex items-start gap-2 p-2 rounded-lg bg-slate-950/60 border border-white/5">
-                  <ArrowRightLeft className="h-4 w-4 text-emerald-400 shrink-0 mt-0.5" />
+                <div className="flex items-start gap-2 p-2 rounded-lg bg-white dark:bg-slate-950/60 border border-slate-200 dark:border-white/5 shadow-xs">
+                  <ArrowRightLeft className="h-4 w-4 text-emerald-600 dark:text-emerald-400 shrink-0 mt-0.5" />
                   <div>
-                    <span className="text-[10px] text-slate-400 uppercase font-semibold block">Flujo de Entrada</span>
-                    <span className="font-mono text-slate-200">{currentExercise.elements.inflow}</span>
+                    <span className="text-[10px] text-slate-500 dark:text-slate-400 uppercase font-semibold block">Flujo de Entrada</span>
+                    <span className="font-mono text-slate-800 dark:text-slate-200">{currentExercise.elements.inflow}</span>
                   </div>
                 </div>
-                <div className="flex items-start gap-2 p-2 rounded-lg bg-slate-950/60 border border-white/5">
-                  <ArrowRightLeft className="h-4 w-4 text-rose-400 shrink-0 mt-0.5" />
+                <div className="flex items-start gap-2 p-2 rounded-lg bg-white dark:bg-slate-950/60 border border-slate-200 dark:border-white/5 shadow-xs">
+                  <ArrowRightLeft className="h-4 w-4 text-rose-600 dark:text-rose-400 shrink-0 mt-0.5" />
                   <div>
-                    <span className="text-[10px] text-slate-400 uppercase font-semibold block">Flujo de Salida</span>
-                    <span className="font-mono text-slate-200">{currentExercise.elements.outflow}</span>
+                    <span className="text-[10px] text-slate-500 dark:text-slate-400 uppercase font-semibold block">Flujo de Salida</span>
+                    <span className="font-mono text-slate-800 dark:text-slate-200">{currentExercise.elements.outflow}</span>
                   </div>
                 </div>
-                <div className="flex items-start gap-2 p-2 rounded-lg bg-slate-950/60 border border-white/5">
-                  <Variable className="h-4 w-4 text-purple-400 shrink-0 mt-0.5" />
+                <div className="flex items-start gap-2 p-2 rounded-lg bg-white dark:bg-slate-950/60 border border-slate-200 dark:border-white/5 shadow-xs">
+                  <Variable className="h-4 w-4 text-purple-600 dark:text-purple-400 shrink-0 mt-0.5" />
                   <div>
-                    <span className="text-[10px] text-slate-400 uppercase font-semibold block">Variables Auxiliares</span>
-                    <span className="font-mono text-slate-200">{currentExercise.elements.aux}</span>
+                    <span className="text-[10px] text-slate-500 dark:text-slate-400 uppercase font-semibold block">Variables Auxiliares</span>
+                    <span className="font-mono text-slate-800 dark:text-slate-200">{currentExercise.elements.aux}</span>
                   </div>
                 </div>
               </div>
@@ -208,10 +213,10 @@ export default function ExercisesModal({ isOpen, onClose, onSelectExercise, curr
 
             {/* Mathematical Deduction */}
             {currentExercise.deduction && (
-              <div className="rounded-xl border border-purple-500/30 bg-purple-950/15 p-4 space-y-3">
+              <div className="rounded-xl border border-purple-200 dark:border-purple-500/30 bg-purple-50/50 dark:bg-purple-950/15 p-4 space-y-3">
                 <div className="flex items-center justify-between">
-                  <span className="text-[11px] font-semibold uppercase tracking-wider text-purple-300 flex items-center gap-1.5">
-                    <Sigma className="h-4 w-4 text-purple-400" />
+                  <span className="text-[11px] font-semibold uppercase tracking-wider text-purple-700 dark:text-purple-300 flex items-center gap-1.5">
+                    <Sigma className="h-4 w-4 text-purple-600 dark:text-purple-400" />
                     Deducción Formal de las Ecuaciones
                   </span>
                   {currentExercise.id === 'poblacion' && onOpenDeduction && (
@@ -220,24 +225,24 @@ export default function ExercisesModal({ isOpen, onClose, onSelectExercise, curr
                         onClose();
                         onOpenDeduction();
                       }}
-                      className="flex items-center gap-1 text-[11px] font-semibold text-purple-300 hover:text-purple-100 bg-purple-500/20 hover:bg-purple-500/30 px-2.5 py-1 rounded-lg border border-purple-500/30 transition-all cursor-pointer"
+                      className="flex items-center gap-1 text-[11px] font-semibold text-purple-700 dark:text-purple-300 hover:text-purple-900 dark:hover:text-purple-100 bg-purple-100 dark:bg-purple-500/20 hover:bg-purple-200 dark:hover:bg-purple-500/30 px-2.5 py-1 rounded-lg border border-purple-300 dark:border-purple-500/30 transition-all cursor-pointer shadow-xs"
                     >
                       <Sigma className="h-3 w-3" />
-                      <span>Ver Demostración Completa y Comparativa</span>
+                      <span>Ver Demostración Completa</span>
                     </button>
                   )}
                 </div>
 
                 <div className="space-y-2">
                   {currentExercise.deduction.map((d, idx) => (
-                    <div key={idx} className="p-2.5 rounded-lg bg-slate-950/70 border border-white/5 space-y-1 text-xs">
+                    <div key={idx} className="p-2.5 rounded-lg bg-white dark:bg-slate-950/70 border border-purple-100 dark:border-white/5 space-y-1 text-xs shadow-xs">
                       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1">
-                        <span className="font-semibold text-slate-200">{d.step}</span>
-                        <code className="font-mono text-purple-300 font-bold bg-purple-950/50 px-2 py-0.5 rounded border border-purple-500/20">
+                        <span className="font-semibold text-slate-900 dark:text-slate-200">{d.step}</span>
+                        <code className="font-mono text-purple-700 dark:text-purple-300 font-bold bg-purple-50 dark:bg-purple-950/50 px-2 py-0.5 rounded border border-purple-200 dark:border-purple-500/20">
                           {d.math}
                         </code>
                       </div>
-                      <p className="text-[11px] text-slate-400 leading-relaxed">
+                      <p className="text-[11px] text-slate-600 dark:text-slate-400 leading-relaxed">
                         {d.desc}
                       </p>
                     </div>
@@ -247,12 +252,12 @@ export default function ExercisesModal({ isOpen, onClose, onSelectExercise, curr
             )}
 
             {/* Analytical Resolution */}
-            <div className="rounded-xl border border-emerald-500/25 bg-emerald-950/15 p-4 space-y-1.5">
-              <span className="text-[11px] font-semibold uppercase tracking-wider text-emerald-400 flex items-center gap-1.5">
+            <div className="rounded-xl border border-emerald-300 dark:border-emerald-500/25 bg-emerald-50/60 dark:bg-emerald-950/15 p-4 space-y-1.5">
+              <span className="text-[11px] font-semibold uppercase tracking-wider text-emerald-700 dark:text-emerald-400 flex items-center gap-1.5">
                 <CheckCircle2 className="h-3.5 w-3.5" />
                 Respuesta y Análisis Dinámico
               </span>
-              <p className="text-xs text-slate-300 leading-relaxed">
+              <p className="text-xs text-slate-700 dark:text-slate-300 leading-relaxed">
                 {currentExercise.analysis}
               </p>
             </div>
@@ -260,14 +265,20 @@ export default function ExercisesModal({ isOpen, onClose, onSelectExercise, curr
         </div>
 
         {/* Footer */}
-        <div className="flex items-center justify-between border-t border-white/10 px-6 py-3.5 bg-slate-950/60">
-          <span className="text-xs text-slate-400">
-            Presiona <kbd className="px-1.5 py-0.5 rounded border border-white/10 bg-slate-900 font-mono text-[10px]">Esc</kbd> para cerrar
-          </span>
+        <div className="flex flex-col sm:flex-row items-center justify-between gap-2 border-t border-slate-200 dark:border-white/10 px-6 py-3.5 bg-slate-50 dark:bg-slate-950/60">
+          <div className="flex items-center gap-3 text-xs text-slate-500 dark:text-slate-400">
+            <span className="flex items-center gap-1 text-purple-600 dark:text-purple-400 font-semibold">
+              <Bot className="h-3.5 w-3.5" /> Desarrollado por Agentes de IA
+            </span>
+            <span className="hidden sm:inline text-slate-300 dark:text-slate-700">•</span>
+            <span className="hidden sm:inline">
+              <kbd className="px-1.5 py-0.5 rounded border border-slate-200 dark:border-white/10 bg-white dark:bg-slate-900 font-mono text-[10px]">Esc</kbd> para cerrar
+            </span>
+          </div>
           <div className="flex items-center gap-3">
             <button
               onClick={onClose}
-              className="px-4 py-2 rounded-xl border border-white/10 bg-slate-900 hover:bg-slate-800 text-xs font-semibold text-slate-300 transition-colors"
+              className="px-4 py-2 rounded-xl border border-slate-200 dark:border-white/10 bg-white dark:bg-slate-900 hover:bg-slate-100 dark:hover:bg-slate-800 text-xs font-semibold text-slate-700 dark:text-slate-300 transition-colors cursor-pointer shadow-xs"
             >
               Cerrar
             </button>
@@ -276,7 +287,7 @@ export default function ExercisesModal({ isOpen, onClose, onSelectExercise, curr
                 if (onSelectExercise) onSelectExercise(currentExercise.modelId);
                 onClose();
               }}
-              className="flex items-center gap-2 px-4 py-2 rounded-xl bg-blue-600 hover:bg-blue-500 active:scale-95 text-xs font-semibold text-white shadow-lg shadow-blue-500/25 transition-all"
+              className="flex items-center gap-2 px-4 py-2 rounded-xl bg-blue-600 hover:bg-blue-500 active:scale-95 text-xs font-semibold text-white shadow-lg shadow-blue-500/25 transition-all cursor-pointer"
             >
               <Play className="h-3.5 w-3.5 fill-current" />
               Cargar este modelo en el Simulador
@@ -287,4 +298,3 @@ export default function ExercisesModal({ isOpen, onClose, onSelectExercise, curr
     </div>
   );
 }
-

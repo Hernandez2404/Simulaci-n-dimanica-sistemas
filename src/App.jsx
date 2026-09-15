@@ -1,4 +1,4 @@
-import { useState, useMemo, useCallback } from 'react';
+import { useState, useMemo, useCallback, useEffect } from 'react';
 import { useNodesState, useEdgesState } from '@xyflow/react';
 import DiagramCanvas from './components/DiagramCanvas';
 import ResultsChart from './components/ResultsChart';
@@ -14,12 +14,36 @@ import {
   BookOpen, 
   ChevronDown,
   FunctionSquare,
-  Sigma
+  Sigma,
+  Sun,
+  Moon,
+  Bot
 } from 'lucide-react';
 
 export default function App() {
   const [selectedModelId, setSelectedModelId] = useState('poblacion');
   const activeModelConfig = useMemo(() => MODELS[selectedModelId] || MODELS.poblacion, [selectedModelId]);
+
+  // Theme state with local persistence (defaults to dark)
+  const [theme, setTheme] = useState(() => {
+    return localStorage.getItem('sd_theme') || 'dark';
+  });
+  const isDark = theme === 'dark';
+
+  useEffect(() => {
+    localStorage.setItem('sd_theme', theme);
+    if (theme === 'dark') {
+      document.documentElement.classList.add('dark');
+      document.documentElement.classList.remove('light');
+    } else {
+      document.documentElement.classList.add('light');
+      document.documentElement.classList.remove('dark');
+    }
+  }, [theme]);
+
+  const toggleTheme = useCallback(() => {
+    setTheme(prev => (prev === 'dark' ? 'light' : 'dark'));
+  }, []);
 
   // Current working parameters (overrides)
   const [paramValues, setParamValues] = useState(() => {
@@ -115,36 +139,41 @@ export default function App() {
     }));
   };
 
-
   return (
-    <div className="h-screen w-screen bg-[#080C14] text-slate-100 flex flex-col font-sans overflow-hidden select-none">
+    <div className="h-screen w-screen bg-slate-50 dark:bg-[#080C14] text-slate-900 dark:text-slate-100 flex flex-col font-sans overflow-hidden select-none transition-colors duration-200">
       {/* Precision Header */}
-      <header className="h-16 border-b border-white/10 flex items-center justify-between px-6 bg-slate-900/60 backdrop-blur-xl z-20 shrink-0">
+      <header className="h-16 border-b border-slate-200 dark:border-white/10 flex items-center justify-between px-6 bg-white/85 dark:bg-slate-900/60 backdrop-blur-xl z-20 shrink-0 shadow-xs transition-colors duration-200">
         <div className="flex items-center gap-4">
           <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-blue-600 to-indigo-700 text-white shadow-lg shadow-blue-500/25 ring-1 ring-white/20">
             <Activity className="h-5 w-5" />
           </div>
           <div>
             <div className="flex items-center gap-2">
-              <h1 className="text-base font-bold tracking-tight text-slate-100">
+              <h1 className="text-base font-bold tracking-tight text-slate-900 dark:text-slate-100">
                 Simulador de Dinámica de Sistemas
               </h1>
-              <span className="rounded-full bg-blue-500/15 border border-blue-500/30 px-2 py-0.5 text-[10px] font-semibold text-blue-400">
+              <span className="rounded-full bg-blue-100 dark:bg-blue-500/15 border border-blue-200 dark:border-blue-500/30 px-2 py-0.5 text-[10px] font-semibold text-blue-700 dark:text-blue-400">
                 Euler v1.2
               </span>
+              <div className="hidden lg:flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[10px] font-semibold border bg-purple-50 dark:bg-purple-500/10 border-purple-200 dark:border-purple-500/25 text-purple-700 dark:text-purple-300 shadow-xs">
+                <Bot className="h-3 w-3 text-purple-600 dark:text-purple-400" />
+                <span>Desarrollado por Agentes de IA</span>
+              </div>
             </div>
-            <p className="text-xs text-slate-400">Modelado formal y simulación computacional de sistemas dinámicos</p>
+            <p className="text-xs text-slate-500 dark:text-slate-400">
+              Modelado formal y simulación computacional de sistemas dinámicos
+            </p>
           </div>
         </div>
 
         {/* Model Switcher Dropdown & Actions */}
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-2.5">
           {/* Quick Exercise Selector */}
           <div className="relative">
             <select
               value={selectedModelId}
               onChange={(e) => loadModel(e.target.value)}
-              className="appearance-none rounded-xl border border-white/10 bg-slate-800/80 px-4 py-2 pr-9 text-xs font-semibold text-slate-200 shadow-inner hover:border-white/20 focus:outline-none focus:ring-2 focus:ring-blue-500/50 cursor-pointer"
+              className="appearance-none rounded-xl border border-slate-300 dark:border-white/10 bg-white dark:bg-slate-800/80 px-4 py-2 pr-9 text-xs font-semibold text-slate-800 dark:text-slate-200 shadow-xs hover:border-slate-400 dark:hover:border-white/20 focus:outline-none focus:ring-2 focus:ring-blue-500/50 cursor-pointer"
             >
               <option value="poblacion">Caso 5.1: Dinámica Poblacional</option>
               <option value="helpdesk">Caso 5.2: Mesa de Ayuda TI</option>
@@ -155,27 +184,37 @@ export default function App() {
 
           <button 
             onClick={() => setIsDeductionModalOpen(true)}
-            className="flex items-center gap-2 rounded-xl border border-purple-500/30 bg-purple-950/30 hover:bg-purple-900/40 px-3.5 py-2 text-xs font-semibold text-purple-200 hover:border-purple-500/50 active:scale-95 transition-all shadow-sm cursor-pointer"
+            className="flex items-center gap-1.5 rounded-xl border border-purple-200 dark:border-purple-500/30 bg-purple-50 dark:bg-purple-950/30 hover:bg-purple-100 dark:hover:bg-purple-900/40 px-3.5 py-2 text-xs font-semibold text-purple-700 dark:text-purple-200 hover:border-purple-300 dark:hover:border-purple-500/50 active:scale-95 transition-all shadow-xs cursor-pointer"
           >
-            <Sigma className="h-4 w-4 text-purple-400" />
-            <span>Deducción Matemática</span>
+            <Sigma className="h-4 w-4 text-purple-600 dark:text-purple-400" />
+            <span className="hidden sm:inline">Deducción Matemática</span>
           </button>
 
           <button 
             onClick={() => setIsModalOpen(true)}
-            className="flex items-center gap-2 rounded-xl border border-white/10 bg-slate-800/60 hover:bg-slate-750 px-3.5 py-2 text-xs font-semibold text-slate-200 hover:border-white/25 active:scale-95 transition-all shadow-sm cursor-pointer"
+            className="flex items-center gap-1.5 rounded-xl border border-slate-200 dark:border-white/10 bg-white dark:bg-slate-800/60 hover:bg-slate-50 dark:hover:bg-slate-750 px-3.5 py-2 text-xs font-semibold text-slate-700 dark:text-slate-200 hover:border-slate-300 dark:hover:border-white/25 active:scale-95 transition-all shadow-xs cursor-pointer"
           >
-            <BookOpen className="h-4 w-4 text-blue-400" />
-            <span>Guía de Ejercicios</span>
+            <BookOpen className="h-4 w-4 text-blue-600 dark:text-blue-400" />
+            <span className="hidden sm:inline">Guía de Ejercicios</span>
           </button>
 
           <button 
             onClick={handleReset}
             title="Restablecer valores originales del modelo"
-            className="flex items-center gap-1.5 rounded-xl border border-white/10 bg-slate-800/60 hover:bg-slate-700/60 px-3 py-2 text-xs font-medium text-slate-300 hover:text-slate-100 active:scale-95 transition-all cursor-pointer"
+            className="flex items-center gap-1.5 rounded-xl border border-slate-200 dark:border-white/10 bg-white dark:bg-slate-800/60 hover:bg-slate-50 dark:hover:bg-slate-700/60 px-3 py-2 text-xs font-medium text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-slate-100 active:scale-95 transition-all cursor-pointer shadow-xs"
           >
             <RotateCcw className="h-3.5 w-3.5" />
             <span>Reset</span>
+          </button>
+
+          {/* Theme Toggle Button */}
+          <button
+            onClick={toggleTheme}
+            title={isDark ? "Cambiar a Modo Blanco / Claro" : "Cambiar a Modo Oscuro"}
+            className="flex items-center gap-1.5 rounded-xl border border-slate-200 dark:border-white/10 bg-white dark:bg-slate-800/60 hover:bg-slate-100 dark:hover:bg-slate-700/60 px-3 py-2 text-xs font-semibold text-slate-700 dark:text-amber-300 hover:text-slate-900 dark:hover:text-amber-200 active:scale-95 transition-all shadow-xs cursor-pointer"
+          >
+            {isDark ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4 text-indigo-600" />}
+            <span className="hidden xl:inline">{isDark ? 'Modo Blanco' : 'Modo Oscuro'}</span>
           </button>
 
           <button 
@@ -193,24 +232,24 @@ export default function App() {
       </header>
 
       {/* Main Studio View */}
-      <main className="flex-1 flex overflow-hidden p-5 gap-5 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-slate-900/40 via-[#080C14] to-[#080C14]">
+      <main className="flex-1 flex overflow-hidden p-5 gap-5 transition-colors duration-200 bg-slate-100/70 dark:bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] dark:from-slate-900/40 dark:via-[#080C14] dark:to-[#080C14]">
         {/* Left Column: Diagram Canvas */}
         <div className="flex-[3] flex flex-col gap-3 min-w-0">
           <div className="flex items-center justify-between px-1">
             <div className="flex items-center gap-2">
               <div className="h-2.5 w-2.5 rounded-full bg-blue-500 animate-pulse" />
-              <h2 className="text-xs font-bold text-slate-300 uppercase tracking-widest">
+              <h2 className="text-xs font-bold text-slate-700 dark:text-slate-300 uppercase tracking-widest">
                 Lienzo de Forrester (Diagrama de Flujos y Niveles)
               </h2>
             </div>
             <div className="flex items-center gap-2">
-              <span className="text-[11px] font-medium text-slate-400 bg-slate-900/60 px-2.5 py-0.5 rounded-md border border-white/5">
+              <span className="text-[11px] font-medium text-slate-600 dark:text-slate-400 bg-white dark:bg-slate-900/60 px-2.5 py-0.5 rounded-md border border-slate-200 dark:border-white/5 shadow-xs">
                 {activeModelConfig.category}
               </span>
             </div>
           </div>
 
-          <div className="flex-1 rounded-2xl border border-white/10 bg-slate-950/70 overflow-hidden shadow-2xl backdrop-blur-md relative">
+          <div className="flex-1 rounded-2xl border border-slate-200 dark:border-white/10 bg-white dark:bg-slate-950/70 overflow-hidden shadow-xl dark:shadow-2xl backdrop-blur-md relative transition-colors duration-200">
             <DiagramCanvas 
               nodesExt={nodes} 
               edgesExt={edges} 
@@ -218,6 +257,7 @@ export default function App() {
               onEdgesChangeExt={onEdgesChange}
               setNodesExt={setNodes}
               setEdgesExt={setEdges}
+              isDark={isDark}
             />
           </div>
         </div>
@@ -229,14 +269,14 @@ export default function App() {
             <div className="flex items-center justify-between px-1">
               <div className="flex items-center gap-2">
                 <div className="h-2.5 w-2.5 rounded-full bg-emerald-500" />
-                <h2 className="text-xs font-bold text-slate-300 uppercase tracking-widest">
+                <h2 className="text-xs font-bold text-slate-700 dark:text-slate-300 uppercase tracking-widest">
                   Trayectoria Temporal y Resultados
                 </h2>
               </div>
             </div>
 
-            <div className="flex-1 rounded-2xl border border-white/10 bg-slate-950/70 overflow-hidden shadow-2xl backdrop-blur-md flex flex-col">
-              <ResultsChart data={simulationData} />
+            <div className="flex-1 rounded-2xl border border-slate-200 dark:border-white/10 bg-white dark:bg-slate-950/70 overflow-hidden shadow-xl dark:shadow-2xl backdrop-blur-md flex flex-col transition-colors duration-200">
+              <ResultsChart data={simulationData} isDark={isDark} />
             </div>
           </div>
 
@@ -244,13 +284,13 @@ export default function App() {
           <div className="h-[250px] flex flex-col gap-2 shrink-0">
             {/* Tab Navigation */}
             <div className="flex items-center justify-between px-1">
-              <div className="flex items-center gap-1.5 p-0.5 rounded-xl bg-slate-900/80 border border-white/10">
+              <div className="flex items-center gap-1.5 p-0.5 rounded-xl bg-slate-200/70 dark:bg-slate-900/80 border border-slate-300/60 dark:border-white/10">
                 <button
                   onClick={() => setActiveTab('params')}
                   className={`flex items-center gap-1.5 px-3 py-1 rounded-lg text-xs font-medium transition-all cursor-pointer ${
                     activeTab === 'params'
                       ? 'bg-blue-600 text-white shadow-md shadow-blue-500/25'
-                      : 'text-slate-400 hover:text-slate-200'
+                      : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200'
                   }`}
                 >
                   <Sliders className="h-3 w-3" />
@@ -261,7 +301,7 @@ export default function App() {
                   className={`flex items-center gap-1.5 px-3 py-1 rounded-lg text-xs font-medium transition-all cursor-pointer ${
                     activeTab === 'equations'
                       ? 'bg-blue-600 text-white shadow-md shadow-blue-500/25'
-                      : 'text-slate-400 hover:text-slate-200'
+                      : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200'
                   }`}
                 >
                   <FunctionSquare className="h-3 w-3" />
@@ -272,7 +312,7 @@ export default function App() {
                   className={`flex items-center gap-1.5 px-3 py-1 rounded-lg text-xs font-medium transition-all cursor-pointer ${
                     activeTab === 'deduction'
                       ? 'bg-purple-600 text-white shadow-md shadow-purple-500/25'
-                      : 'text-slate-400 hover:text-slate-200'
+                      : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200'
                   }`}
                 >
                   <Sigma className="h-3 w-3" />
@@ -286,7 +326,7 @@ export default function App() {
             </div>
 
             {/* Tab Contents Container */}
-            <div className="flex-1 rounded-2xl border border-white/10 bg-slate-950/80 p-4 overflow-y-auto shadow-inner backdrop-blur-md">
+            <div className="flex-1 rounded-2xl border border-slate-200 dark:border-white/10 bg-white dark:bg-slate-950/80 p-4 overflow-y-auto shadow-xs dark:shadow-inner backdrop-blur-md transition-colors duration-200">
               {activeTab === 'params' && (
                 <div className="space-y-3">
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
@@ -294,12 +334,12 @@ export default function App() {
                       const val = paramValues[param.key] !== undefined ? paramValues[param.key] : param.default;
 
                       return (
-                        <div key={param.key} className="p-2.5 rounded-xl bg-slate-900/50 border border-white/5 space-y-1.5">
+                        <div key={param.key} className="p-2.5 rounded-xl bg-slate-50 dark:bg-slate-900/50 border border-slate-200/80 dark:border-white/5 space-y-1.5 shadow-xs">
                           <div className="flex items-center justify-between text-xs">
-                            <span className="text-slate-300 font-medium truncate max-w-[150px]" title={param.label}>
+                            <span className="text-slate-700 dark:text-slate-300 font-medium truncate max-w-[150px]" title={param.label}>
                               {param.label}
                             </span>
-                            <span className="font-mono text-xs font-bold text-blue-400">
+                            <span className="font-mono text-xs font-bold text-blue-600 dark:text-blue-400">
                               {val}
                             </span>
                           </div>
@@ -310,7 +350,7 @@ export default function App() {
                             step={param.step}
                             value={val}
                             onChange={(e) => handleParamChange(param.key, e.target.value)}
-                            className="w-full h-1.5 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-blue-500 focus:outline-none"
+                            className="w-full h-1.5 bg-slate-200 dark:bg-slate-800 rounded-lg appearance-none cursor-pointer accent-blue-600 dark:accent-blue-500 focus:outline-none"
                           />
                         </div>
                       );
@@ -321,20 +361,20 @@ export default function App() {
 
               {activeTab === 'equations' && (
                 <div className="space-y-2 font-mono text-xs">
-                  <div className="text-[11px] font-sans text-slate-400 mb-2">
+                  <div className="text-[11px] font-sans text-slate-500 dark:text-slate-400 mb-2">
                     Estructura diferencial simulada mediante el método de integración de Euler:
                   </div>
                   {activeModelConfig.equations.map((eq, i) => (
-                    <div key={i} className="flex items-start gap-2 p-2 rounded-lg bg-slate-900/60 border border-white/5">
+                    <div key={i} className="flex items-start gap-2 p-2 rounded-lg bg-slate-50 dark:bg-slate-900/60 border border-slate-200 dark:border-white/5 shadow-xs">
                       <span className={`font-semibold w-28 shrink-0 ${
-                        eq.type === 'stock' ? 'text-blue-400' :
-                        eq.type === 'inflow' ? 'text-emerald-400' :
-                        eq.type === 'outflow' ? 'text-rose-400' : 'text-purple-400'
+                        eq.type === 'stock' ? 'text-blue-600 dark:text-blue-400' :
+                        eq.type === 'inflow' ? 'text-emerald-600 dark:text-emerald-400' :
+                        eq.type === 'outflow' ? 'text-rose-600 dark:text-rose-400' : 'text-purple-600 dark:text-purple-400'
                       }`}>
                         {eq.var}
                       </span>
-                      <span className="text-slate-500 font-bold">=</span>
-                      <span className="text-slate-200">{eq.eq}</span>
+                      <span className="text-slate-400 dark:text-slate-500 font-bold">=</span>
+                      <span className="text-slate-800 dark:text-slate-200">{eq.eq}</span>
                     </div>
                   ))}
                 </div>
@@ -344,27 +384,27 @@ export default function App() {
                 <div className="space-y-3 font-sans text-xs">
                   {selectedModelId === 'poblacion' ? (
                     <>
-                      <div className="text-[11px] text-slate-400 font-medium mb-0.5">
+                      <div className="text-[11px] text-slate-500 dark:text-slate-400 font-medium mb-0.5">
                         Origen analítico de la fórmula de población (Malthus / Forrester):
                       </div>
 
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-xs">
-                        <div className="p-2.5 rounded-xl bg-slate-900/60 border border-white/5 space-y-1">
-                          <span className="text-[10px] font-semibold text-slate-400 uppercase block">1. Ecuación Continua Diferencial</span>
-                          <code className="font-mono text-purple-300 text-[11px] block">
+                        <div className="p-2.5 rounded-xl bg-slate-50 dark:bg-slate-900/60 border border-slate-200 dark:border-white/5 space-y-1 shadow-xs">
+                          <span className="text-[10px] font-semibold text-slate-500 dark:text-slate-400 uppercase block">1. Ecuación Continua Diferencial</span>
+                          <code className="font-mono text-purple-700 dark:text-purple-300 text-[11px] block font-bold">
                             dP/dt = P·(0.05 - 0.01) = 0.04·P
                           </code>
-                          <span className="text-[10px] text-slate-400 block font-mono text-slate-300">
+                          <span className="text-[10px] text-slate-600 dark:text-slate-300 block font-mono">
                             Solución: P(t) = 1,000 · e^(0.04 · t)
                           </span>
                         </div>
 
-                        <div className="p-2.5 rounded-xl bg-slate-900/60 border border-white/5 space-y-1">
-                          <span className="text-[10px] font-semibold text-slate-400 uppercase block">2. Algoritmo Euler Discreto</span>
-                          <code className="font-mono text-emerald-300 text-[11px] block">
+                        <div className="p-2.5 rounded-xl bg-slate-50 dark:bg-slate-900/60 border border-slate-200 dark:border-white/5 space-y-1 shadow-xs">
+                          <span className="text-[10px] font-semibold text-slate-500 dark:text-slate-400 uppercase block">2. Algoritmo Euler Discreto</span>
+                          <code className="font-mono text-emerald-700 dark:text-emerald-300 text-[11px] block font-bold">
                             P(t + dt) = P(t) + [N - D] × dt
                           </code>
-                          <span className="text-[10px] text-slate-400 block font-mono text-slate-300">
+                          <span className="text-[10px] text-slate-600 dark:text-slate-300 block font-mono">
                             Con dt=1: P(t + 1) = P(t) × 1.04 (+4% anual)
                           </span>
                         </div>
@@ -372,22 +412,22 @@ export default function App() {
                     </>
                   ) : selectedModelId === 'helpdesk' ? (
                     <div className="space-y-2">
-                      <span className="text-[11px] text-slate-400 font-medium block">
+                      <span className="text-[11px] text-slate-500 dark:text-slate-400 font-medium block">
                         Deducción del modelo lineal de tickets:
                       </span>
-                      <div className="p-2.5 rounded-xl bg-slate-900/60 border border-white/5 space-y-1 font-mono text-xs">
-                        <div className="text-slate-300">dT/dt = Llegadas - Resoluciones = 20 - 25 = -5 tickets/día</div>
-                        <div className="text-emerald-400">T(t) = 50 - 5·t  ⇒  Agotamiento total en t = 10 días</div>
+                      <div className="p-2.5 rounded-xl bg-slate-50 dark:bg-slate-900/60 border border-slate-200 dark:border-white/5 space-y-1 font-mono text-xs shadow-xs">
+                        <div className="text-slate-700 dark:text-slate-300">dT/dt = Llegadas - Resoluciones = 20 - 25 = -5 tickets/día</div>
+                        <div className="text-emerald-600 dark:text-emerald-400 font-bold">T(t) = 50 - 5·t  ⇒  Agotamiento total en t = 10 días</div>
                       </div>
                     </div>
                   ) : (
                     <div className="space-y-2">
-                      <span className="text-[11px] text-slate-400 font-medium block">
+                      <span className="text-[11px] text-slate-500 dark:text-slate-400 font-medium block">
                         Deducción del equilibrio asintótico del inventario:
                       </span>
-                      <div className="p-2.5 rounded-xl bg-slate-900/60 border border-white/5 space-y-1 font-mono text-xs">
-                        <div className="text-slate-300">dI/dt = Envíos - 0.15·I(t) = 50 - 0.15·I(t)</div>
-                        <div className="text-purple-300">Estado Estacionario (dI/dt = 0): I* = 50 / 0.15 ≈ 333.33 pares</div>
+                      <div className="p-2.5 rounded-xl bg-slate-50 dark:bg-slate-900/60 border border-slate-200 dark:border-white/5 space-y-1 font-mono text-xs shadow-xs">
+                        <div className="text-slate-700 dark:text-slate-300">dI/dt = Envíos - 0.15·I(t) = 50 - 0.15·I(t)</div>
+                        <div className="text-purple-700 dark:text-purple-300 font-bold">Estado Estacionario (dI/dt = 0): I* = 50 / 0.15 ≈ 333.33 pares</div>
                       </div>
                     </div>
                   )}
@@ -397,6 +437,23 @@ export default function App() {
           </div>
         </div>
       </main>
+
+      {/* Persistent Footer with AI Agent Credits */}
+      <footer className="h-7 border-t flex items-center justify-between px-6 text-[11px] shrink-0 transition-colors duration-200 bg-white/95 dark:bg-slate-950/80 border-slate-200 dark:border-white/10 text-slate-500 dark:text-slate-400 shadow-xs">
+        <div className="flex items-center gap-2">
+          <Bot className="h-3.5 w-3.5 text-purple-600 dark:text-purple-400" />
+          <span>Desarrollado integralmente por <strong>Agentes de IA</strong></span>
+          <span className="text-slate-300 dark:text-slate-700">•</span>
+          <span className="hidden sm:inline">Simulador de Dinámica de Sistemas (Modelo de Forrester & Integración de Euler)</span>
+        </div>
+        <div className="flex items-center gap-3 font-mono text-[10px] text-slate-400 dark:text-slate-500">
+          <span>React 19</span>
+          <span>•</span>
+          <span>Tailwind v4</span>
+          <span>•</span>
+          <span>XYFlow</span>
+        </div>
+      </footer>
 
       {/* Exercises Modal Dialog */}
       <ExercisesModal 
@@ -415,4 +472,3 @@ export default function App() {
     </div>
   );
 }
-
