@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { BookOpen, X, Play, CheckCircle2, Layers, ArrowRightLeft, Variable } from 'lucide-react';
+import { BookOpen, X, Play, CheckCircle2, Layers, ArrowRightLeft, Variable, Sigma } from 'lucide-react';
 
 const EXERCISES = [
   {
@@ -14,6 +14,13 @@ const EXERCISES = [
       outflow: 'Defunciones = Población ÷ Esperanza_Vida (100)',
       aux: 'Tasa_Natalidad = 0.05, Esperanza_Vida = 100 años'
     },
+    deduction: [
+      { step: '1. Balance de Conservación', math: 'dP/dt = Nacimientos - Defunciones', desc: 'Principio de continuidad: la variación del stock Población equivale a entradas menos salidas.' },
+      { step: '2. Tasa de Natalidad (Inflow)', math: 'Nacimientos = P(t) × n = P(t) × 0.05', desc: 'Fecundidad proporcional per cápita (bucle de realimentación positiva R).' },
+      { step: '3. Tasa de Mortalidad (Outflow)', math: 'Defunciones = P(t) / Ev = P(t) × 0.01', desc: 'La probabilidad anual de muerte es el inverso de la esperanza de vida (m = 1/100).' },
+      { step: '4. Ecuación Diferencial & Solución Continua', math: 'dP/dt = P·(0.05 - 0.01) = 0.04·P  ⇒  P(t) = 1,000·e^(0.04·t)', desc: 'Tasa intrínseca neta r = +4% anual. Genera un crecimiento exponencial ininterrumpido.' },
+      { step: '5. Discretización de Euler (Simulador)', math: 'P(t + dt) = P(t) + [Nacimientos - Defunciones] × dt', desc: 'Con dt=1 año: P(t + 1) = P(t) × 1.04 (crece 4% anual de forma discreta recurrente).' }
+    ],
     analysis: 'Al ser la tasa de natalidad (5%) mayor que la tasa bruta de mortalidad (1% = 1/100), la tasa neta de crecimiento es del +4% anual. Esto genera un bucle de realimentación positiva que produce un crecimiento exponencial acelerado de la población.',
     modelId: 'poblacion'
   },
@@ -29,6 +36,11 @@ const EXERCISES = [
       outflow: 'Resolución de Tickets (25 tickets/día constante)',
       aux: 'Tasa_Llegada = 20, Tasa_Resolucion = 25'
     },
+    deduction: [
+      { step: '1. Balance de Masa', math: 'dT/dt = Llegada - Resolución = 20 - 25 = -5 tickets/día', desc: 'Ambos flujos son constantes exógenas, por lo que la derivada neta es constante.' },
+      { step: '2. Solución Analítica', math: 'T(t) = T₀ - 5·t = 50 - 5·t', desc: 'Decremento estrictamente lineal sin realimentación de estado.' },
+      { step: '3. Punto de Agotamiento', math: 'T(t) = 0  ⇒  50 - 5·t = 0  ⇒  t = 10 días', desc: 'La cola de tickets pendientes se vacía por completo exactamente al décimo día.' }
+    ],
     analysis: 'Al ser el flujo de salida (25 tickets/día) estrictamente mayor que el flujo de entrada (20 tickets/día), la acumulación neta es negativa (-5 tickets/día). El sistema exhibe un decremento lineal que agota todos los tickets pendientes exactamente en 10 días.',
     modelId: 'helpdesk'
   },
@@ -44,12 +56,17 @@ const EXERCISES = [
       outflow: 'Ventas = Inventario × 0.15 (15% del inventario)',
       aux: 'Fracción_Ventas = 0.15'
     },
+    deduction: [
+      { step: '1. Balance con Realimentación Negativa', math: 'dI/dt = Envíos - Ventas = 50 - 0.15·I(t)', desc: 'La tasa de salida aumenta a medida que crece el inventario, autorregulando el sistema.' },
+      { step: '2. Condición de Estado Estacionario (Homeostasis)', math: 'dI/dt = 0  ⇒  50 - 0.15·I* = 0  ⇒  I* = 50 / 0.15 ≈ 333.33 pares', desc: 'El inventario converge asintóticamente hacia el punto donde entradas igualan salidas.' },
+      { step: '3. Solución Analítica Completa', math: 'I(t) = 333.33 + (500 - 333.33)·e^(-0.15·t)', desc: 'Caída exponencial decreciente que estabiliza el stock en 333.33 unidades.' }
+    ],
     analysis: 'Dado que las ventas dependen directamente del nivel de inventario actual, se forma un bucle de retroalimentación negativa que busca el equilibrio (homeostasis). Inicialmente salen 75 (15% de 500) y entran 50, provocando que el stock disminuya con pendiente decreciente hasta estabilizarse en 333.3 unidades (donde Entradas = Salidas).',
     modelId: 'inventario'
   }
 ];
 
-export default function ExercisesModal({ isOpen, onClose, onSelectExercise, currentModelId }) {
+export default function ExercisesModal({ isOpen, onClose, onSelectExercise, currentModelId, onOpenDeduction }) {
   const [selectedExerciseId, setSelectedExerciseId] = useState('poblacion');
 
   useEffect(() => {
@@ -188,6 +205,46 @@ export default function ExercisesModal({ isOpen, onClose, onSelectExercise, curr
                 </div>
               </div>
             </div>
+
+            {/* Mathematical Deduction */}
+            {currentExercise.deduction && (
+              <div className="rounded-xl border border-purple-500/30 bg-purple-950/15 p-4 space-y-3">
+                <div className="flex items-center justify-between">
+                  <span className="text-[11px] font-semibold uppercase tracking-wider text-purple-300 flex items-center gap-1.5">
+                    <Sigma className="h-4 w-4 text-purple-400" />
+                    Deducción Formal de las Ecuaciones
+                  </span>
+                  {currentExercise.id === 'poblacion' && onOpenDeduction && (
+                    <button
+                      onClick={() => {
+                        onClose();
+                        onOpenDeduction();
+                      }}
+                      className="flex items-center gap-1 text-[11px] font-semibold text-purple-300 hover:text-purple-100 bg-purple-500/20 hover:bg-purple-500/30 px-2.5 py-1 rounded-lg border border-purple-500/30 transition-all cursor-pointer"
+                    >
+                      <Sigma className="h-3 w-3" />
+                      <span>Ver Demostración Completa y Comparativa</span>
+                    </button>
+                  )}
+                </div>
+
+                <div className="space-y-2">
+                  {currentExercise.deduction.map((d, idx) => (
+                    <div key={idx} className="p-2.5 rounded-lg bg-slate-950/70 border border-white/5 space-y-1 text-xs">
+                      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1">
+                        <span className="font-semibold text-slate-200">{d.step}</span>
+                        <code className="font-mono text-purple-300 font-bold bg-purple-950/50 px-2 py-0.5 rounded border border-purple-500/20">
+                          {d.math}
+                        </code>
+                      </div>
+                      <p className="text-[11px] text-slate-400 leading-relaxed">
+                        {d.desc}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
 
             {/* Analytical Resolution */}
             <div className="rounded-xl border border-emerald-500/25 bg-emerald-950/15 p-4 space-y-1.5">

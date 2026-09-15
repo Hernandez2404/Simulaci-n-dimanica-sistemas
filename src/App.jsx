@@ -3,6 +3,7 @@ import { useNodesState, useEdgesState } from '@xyflow/react';
 import DiagramCanvas from './components/DiagramCanvas';
 import ResultsChart from './components/ResultsChart';
 import ExercisesModal from './components/ExercisesModal';
+import MathDeductionModal from './components/MathDeductionModal';
 import { runSimulation } from './lib/simulatorEngine';
 import { MODELS } from './lib/modelsData';
 import { 
@@ -12,7 +13,8 @@ import {
   Sliders, 
   BookOpen, 
   ChevronDown,
-  FunctionSquare
+  FunctionSquare,
+  Sigma
 } from 'lucide-react';
 
 export default function App() {
@@ -28,8 +30,9 @@ export default function App() {
     return initial;
   });
 
-  const [activeTab, setActiveTab] = useState('params'); // 'params' | 'equations'
+  const [activeTab, setActiveTab] = useState('params'); // 'params' | 'equations' | 'deduction'
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isDeductionModalOpen, setIsDeductionModalOpen] = useState(false);
   const [isSimulating, setIsSimulating] = useState(false);
 
   // ReactFlow state
@@ -151,6 +154,14 @@ export default function App() {
           </div>
 
           <button 
+            onClick={() => setIsDeductionModalOpen(true)}
+            className="flex items-center gap-2 rounded-xl border border-purple-500/30 bg-purple-950/30 hover:bg-purple-900/40 px-3.5 py-2 text-xs font-semibold text-purple-200 hover:border-purple-500/50 active:scale-95 transition-all shadow-sm cursor-pointer"
+          >
+            <Sigma className="h-4 w-4 text-purple-400" />
+            <span>Deducción Matemática</span>
+          </button>
+
+          <button 
             onClick={() => setIsModalOpen(true)}
             className="flex items-center gap-2 rounded-xl border border-white/10 bg-slate-800/60 hover:bg-slate-750 px-3.5 py-2 text-xs font-semibold text-slate-200 hover:border-white/25 active:scale-95 transition-all shadow-sm cursor-pointer"
           >
@@ -256,6 +267,17 @@ export default function App() {
                   <FunctionSquare className="h-3 w-3" />
                   <span>Ecuaciones</span>
                 </button>
+                <button
+                  onClick={() => setActiveTab('deduction')}
+                  className={`flex items-center gap-1.5 px-3 py-1 rounded-lg text-xs font-medium transition-all cursor-pointer ${
+                    activeTab === 'deduction'
+                      ? 'bg-purple-600 text-white shadow-md shadow-purple-500/25'
+                      : 'text-slate-400 hover:text-slate-200'
+                  }`}
+                >
+                  <Sigma className="h-3 w-3" />
+                  <span>Deducción</span>
+                </button>
               </div>
 
               <span className="text-[11px] font-mono text-slate-500">
@@ -265,7 +287,7 @@ export default function App() {
 
             {/* Tab Contents Container */}
             <div className="flex-1 rounded-2xl border border-white/10 bg-slate-950/80 p-4 overflow-y-auto shadow-inner backdrop-blur-md">
-              {activeTab === 'params' ? (
+              {activeTab === 'params' && (
                 <div className="space-y-3">
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                     {activeModelConfig.params.map((param) => {
@@ -295,7 +317,9 @@ export default function App() {
                     })}
                   </div>
                 </div>
-              ) : (
+              )}
+
+              {activeTab === 'equations' && (
                 <div className="space-y-2 font-mono text-xs">
                   <div className="text-[11px] font-sans text-slate-400 mb-2">
                     Estructura diferencial simulada mediante el método de integración de Euler:
@@ -315,6 +339,69 @@ export default function App() {
                   ))}
                 </div>
               )}
+
+              {activeTab === 'deduction' && (
+                <div className="space-y-3 font-sans text-xs">
+                  {selectedModelId === 'poblacion' ? (
+                    <>
+                      <div className="flex items-center justify-between">
+                        <span className="text-[11px] text-slate-400 font-medium">
+                          Origen analítico de la fórmula de población (Malthus / Forrester):
+                        </span>
+                        <button
+                          onClick={() => setIsDeductionModalOpen(true)}
+                          className="flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-wider text-purple-300 hover:text-white bg-purple-500/20 hover:bg-purple-500/30 px-2.5 py-1 rounded-lg border border-purple-500/30 transition-all cursor-pointer"
+                        >
+                          <Sigma className="h-3 w-3" />
+                          <span>Demostración Completa & Comparativa</span>
+                        </button>
+                      </div>
+
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-xs">
+                        <div className="p-2.5 rounded-xl bg-slate-900/60 border border-white/5 space-y-1">
+                          <span className="text-[10px] font-semibold text-slate-400 uppercase block">1. Ecuación Continua Diferencial</span>
+                          <code className="font-mono text-purple-300 text-[11px] block">
+                            dP/dt = P·(0.05 - 0.01) = 0.04·P
+                          </code>
+                          <span className="text-[10px] text-slate-400 block font-mono text-slate-300">
+                            Solución: P(t) = 1,000 · e^(0.04 · t)
+                          </span>
+                        </div>
+
+                        <div className="p-2.5 rounded-xl bg-slate-900/60 border border-white/5 space-y-1">
+                          <span className="text-[10px] font-semibold text-slate-400 uppercase block">2. Algoritmo Euler Discreto</span>
+                          <code className="font-mono text-emerald-300 text-[11px] block">
+                            P(t + dt) = P(t) + [N - D] × dt
+                          </code>
+                          <span className="text-[10px] text-slate-400 block font-mono text-slate-300">
+                            Con dt=1: P(t + 1) = P(t) × 1.04 (+4% anual)
+                          </span>
+                        </div>
+                      </div>
+                    </>
+                  ) : selectedModelId === 'helpdesk' ? (
+                    <div className="space-y-2">
+                      <span className="text-[11px] text-slate-400 font-medium block">
+                        Deducción del modelo lineal de tickets:
+                      </span>
+                      <div className="p-2.5 rounded-xl bg-slate-900/60 border border-white/5 space-y-1 font-mono text-xs">
+                        <div className="text-slate-300">dT/dt = Llegadas - Resoluciones = 20 - 25 = -5 tickets/día</div>
+                        <div className="text-emerald-400">T(t) = 50 - 5·t  ⇒  Agotamiento total en t = 10 días</div>
+                      </div>
+                    </div>
+                  ) : (
+                    <div className="space-y-2">
+                      <span className="text-[11px] text-slate-400 font-medium block">
+                        Deducción del equilibrio asintótico del inventario:
+                      </span>
+                      <div className="p-2.5 rounded-xl bg-slate-900/60 border border-white/5 space-y-1 font-mono text-xs">
+                        <div className="text-slate-300">dI/dt = Envíos - 0.15·I(t) = 50 - 0.15·I(t)</div>
+                        <div className="text-purple-300">Estado Estacionario (dI/dt = 0): I* = 50 / 0.15 ≈ 333.33 pares</div>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              )}
             </div>
           </div>
         </div>
@@ -326,6 +413,13 @@ export default function App() {
         onClose={() => setIsModalOpen(false)} 
         onSelectExercise={loadModel}
         currentModelId={selectedModelId}
+        onOpenDeduction={() => setIsDeductionModalOpen(true)}
+      />
+
+      {/* Math Deduction Modal Dialog */}
+      <MathDeductionModal
+        isOpen={isDeductionModalOpen}
+        onClose={() => setIsDeductionModalOpen(false)}
       />
     </div>
   );
