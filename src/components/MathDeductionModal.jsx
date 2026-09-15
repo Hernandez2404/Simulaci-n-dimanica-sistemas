@@ -58,7 +58,7 @@ export default function MathDeductionModal({ isOpen, onClose }) {
         onClick={(e) => e.stopPropagation()}
       >
         {/* Top Header */}
-        <div className="flex items-center justify-between border-b border-slate-200 dark:border-white/10 px-6 py-4 bg-slate-50 dark:bg-slate-900/50 backdrop-blur-md">
+        <div className="flex items-center justify-between border-b border-slate-200 dark:border-white/10 px-6 py-4 bg-slate-50 dark:bg-[#080C14] backdrop-blur-md">
           <div className="flex items-center gap-3">
             <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-indigo-500 to-purple-600 text-white shadow-lg shadow-purple-500/25 ring-1 ring-white/20">
               <Sigma className="h-5 w-5" />
@@ -91,14 +91,14 @@ export default function MathDeductionModal({ isOpen, onClose }) {
         </div>
 
         {/* Navigation Tabs */}
-        <div className="flex items-center justify-between px-6 py-2.5 border-b border-slate-200 dark:border-white/10 bg-slate-100/60 dark:bg-slate-950/40">
+        <div className="flex items-center justify-between px-6 py-2.5 border-b border-slate-200 dark:border-white/10 bg-slate-100/60 dark:bg-[#080C14]/80">
           <div className="flex items-center gap-2">
             <button
               onClick={() => setActiveTab('steps')}
               className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold transition-all cursor-pointer ${
                 activeTab === 'steps'
                   ? 'bg-purple-600 text-white shadow-md shadow-purple-500/25'
-                  : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200 hover:bg-slate-200/50 dark:hover:bg-slate-900/50'
+                  : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200 hover:bg-slate-200/50 dark:hover:bg-[#0D1527]'
               }`}
             >
               <Sparkles className="h-3.5 w-3.5" />
@@ -109,7 +109,7 @@ export default function MathDeductionModal({ isOpen, onClose }) {
               className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold transition-all cursor-pointer ${
                 activeTab === 'compare'
                   ? 'bg-purple-600 text-white shadow-md shadow-purple-500/25'
-                  : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200 hover:bg-slate-200/50 dark:hover:bg-slate-900/50'
+                  : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200 hover:bg-slate-200/50 dark:hover:bg-[#0D1527]'
               }`}
             >
               <GitCompare className="h-3.5 w-3.5" />
@@ -120,7 +120,7 @@ export default function MathDeductionModal({ isOpen, onClose }) {
               className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold transition-all cursor-pointer ${
                 activeTab === 'loops'
                   ? 'bg-purple-600 text-white shadow-md shadow-purple-500/25'
-                  : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200 hover:bg-slate-200/50 dark:hover:bg-slate-900/50'
+                  : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200 hover:bg-slate-200/50 dark:hover:bg-[#0D1527]'
               }`}
             >
               <RefreshCw className="h-3.5 w-3.5" />
@@ -134,11 +134,11 @@ export default function MathDeductionModal({ isOpen, onClose }) {
         </div>
 
         {/* Content Area */}
-        <div className="flex-1 p-6 overflow-y-auto space-y-6 bg-slate-50/50 dark:bg-gradient-to-b dark:from-[#0A0F1D] dark:via-[#080C14] dark:to-[#080C14]">
+        <div className="flex-1 p-6 overflow-y-auto space-y-6 bg-slate-50/50 dark:bg-[#0A0F1D] dark:bg-gradient-to-b dark:from-[#0A0F1D] dark:via-[#080C14] dark:to-[#080C14]">
           {activeTab === 'steps' && (
             <div className="space-y-5">
               {/* Step 1 */}
-              <div className="rounded-2xl border border-slate-200 dark:border-white/10 bg-white dark:bg-slate-900/40 p-5 space-y-3 shadow-xs hover:border-blue-400 dark:hover:border-blue-500/30 transition-all">
+              <div className="rounded-2xl border border-slate-200 dark:border-white/10 bg-white dark:bg-[#0D1527] p-5 space-y-3 shadow-xs hover:border-blue-400 dark:hover:border-blue-500/30 transition-all">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2">
                     <span className="flex h-6 w-6 items-center justify-center rounded-full bg-blue-100 dark:bg-blue-500/20 text-blue-600 dark:text-blue-400 text-xs font-bold ring-1 ring-blue-300 dark:ring-blue-500/30">
@@ -155,7 +155,7 @@ export default function MathDeductionModal({ isOpen, onClose }) {
                 <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
                   En Dinámica de Sistemas (fundada por Jay W. Forrester), cualquier acumulación cerrada sin corrientes migratorias externas se rige por la ley de balance: la razón de cambio de la variable de estado o <strong>Nivel</strong> (Stock) es la diferencia estricta entre sus <strong>Flujos de Entrada</strong> y sus <strong>Flujos de Salida</strong> por unidad de tiempo.
                 </p>
-                <div className="p-3 rounded-xl bg-slate-100 dark:bg-slate-950/70 border border-slate-200 dark:border-white/5 font-mono text-xs text-slate-800 dark:text-slate-200 flex flex-col md:flex-row items-center justify-between gap-2 shadow-xs">
+                <div className="p-3 rounded-xl bg-slate-100 dark:bg-[#080C14] border border-slate-200 dark:border-white/10 font-mono text-xs text-slate-800 dark:text-slate-200 flex flex-col md:flex-row items-center justify-between gap-2 shadow-xs">
                   <div className="flex items-center gap-2">
                     <span className="text-blue-600 dark:text-blue-400 font-bold">dP(t) / dt</span>
                     <span className="text-slate-400">=</span>
@@ -170,7 +170,7 @@ export default function MathDeductionModal({ isOpen, onClose }) {
               </div>
 
               {/* Step 2 */}
-              <div className="rounded-2xl border border-slate-200 dark:border-white/10 bg-white dark:bg-slate-900/40 p-5 space-y-3 shadow-xs hover:border-emerald-400 dark:hover:border-emerald-500/30 transition-all">
+              <div className="rounded-2xl border border-slate-200 dark:border-white/10 bg-white dark:bg-[#0D1527] p-5 space-y-3 shadow-xs hover:border-emerald-400 dark:hover:border-emerald-500/30 transition-all">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2">
                     <span className="flex h-6 w-6 items-center justify-center rounded-full bg-emerald-100 dark:bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 text-xs font-bold ring-1 ring-emerald-300 dark:ring-emerald-500/30">
@@ -187,7 +187,7 @@ export default function MathDeductionModal({ isOpen, onClose }) {
                 <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
                   Los nacimientos no son una constante fija exógena: dependen intrínsecamente del tamaño actual de la población fértil disponible. Si cada individuo genera en promedio una tasa de fecundidad o fertilidad <code className="text-emerald-600 dark:text-emerald-300 font-mono font-bold">n = 0.05</code> (5% anual per cápita), la tasa global de nacimientos se formula como:
                 </p>
-                <div className="p-3 rounded-xl bg-slate-100 dark:bg-slate-950/70 border border-slate-200 dark:border-white/5 font-mono text-xs text-slate-800 dark:text-slate-200 flex items-center justify-between shadow-xs">
+                <div className="p-3 rounded-xl bg-slate-100 dark:bg-[#080C14] border border-slate-200 dark:border-white/10 font-mono text-xs text-slate-800 dark:text-slate-200 flex items-center justify-between shadow-xs">
                   <div className="flex items-center gap-2">
                     <span className="text-emerald-600 dark:text-emerald-400 font-bold">Nacimientos(t)</span>
                     <span className="text-slate-400">=</span>
@@ -204,7 +204,7 @@ export default function MathDeductionModal({ isOpen, onClose }) {
               </div>
 
               {/* Step 3 */}
-              <div className="rounded-2xl border border-slate-200 dark:border-white/10 bg-white dark:bg-slate-900/40 p-5 space-y-3 shadow-xs hover:border-rose-400 dark:hover:border-rose-500/30 transition-all">
+              <div className="rounded-2xl border border-slate-200 dark:border-white/10 bg-white dark:bg-[#0D1527] p-5 space-y-3 shadow-xs hover:border-rose-400 dark:hover:border-rose-500/30 transition-all">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2">
                     <span className="flex h-6 w-6 items-center justify-center rounded-full bg-rose-100 dark:bg-rose-500/20 text-rose-600 dark:text-rose-400 text-xs font-bold ring-1 ring-rose-300 dark:ring-rose-500/30">
@@ -222,7 +222,7 @@ export default function MathDeductionModal({ isOpen, onClose }) {
                   ¿Por qué las defunciones son <code className="text-rose-600 dark:text-rose-300 font-mono font-bold">Población ÷ Esperanza_Vida</code>? En teoría de colas y dinámica de sistemas agregada con tiempo medio de residencia homogéneo, si la esperanza de vida media es <code className="text-purple-600 dark:text-purple-300 font-mono font-bold">E_v = 100 años</code>, la probabilidad de que una persona fallezca en un año determinado (tasa de mortalidad bruta per cápita <code className="text-purple-600 dark:text-purple-300 font-mono font-bold">m</code>) es exactamente su inversa:
                 </p>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-3 font-mono text-xs">
-                  <div className="p-3 rounded-xl bg-slate-100 dark:bg-slate-950/70 border border-slate-200 dark:border-white/5 space-y-1 shadow-xs">
+                  <div className="p-3 rounded-xl bg-slate-100 dark:bg-[#080C14] border border-slate-200 dark:border-white/10 space-y-1 shadow-xs">
                     <span className="text-[10px] text-slate-500 dark:text-slate-400 font-sans uppercase font-semibold block">Tasa de Mortalidad per cápita</span>
                     <div className="flex items-center gap-1.5 text-purple-700 dark:text-purple-300 font-bold">
                       <span>m = 1 / Esperanza_Vida</span>
@@ -230,7 +230,7 @@ export default function MathDeductionModal({ isOpen, onClose }) {
                       <span>1 / 100 = 0.01 año⁻¹ (1%)</span>
                     </div>
                   </div>
-                  <div className="p-3 rounded-xl bg-slate-100 dark:bg-slate-950/70 border border-slate-200 dark:border-white/5 space-y-1 shadow-xs">
+                  <div className="p-3 rounded-xl bg-slate-100 dark:bg-[#080C14] border border-slate-200 dark:border-white/10 space-y-1 shadow-xs">
                     <span className="text-[10px] text-slate-500 dark:text-slate-400 font-sans uppercase font-semibold block">Ecuación de Defunciones</span>
                     <div className="flex items-center gap-1.5 text-rose-600 dark:text-rose-400 font-bold">
                       <span>Defunciones(t) = P(t) / E_v = P(t) × 0.01</span>
@@ -240,7 +240,7 @@ export default function MathDeductionModal({ isOpen, onClose }) {
               </div>
 
               {/* Step 4 */}
-              <div className="rounded-2xl border border-slate-200 dark:border-white/10 bg-white dark:bg-slate-900/40 p-5 space-y-3 shadow-xs hover:border-purple-400 dark:hover:border-purple-500/30 transition-all">
+              <div className="rounded-2xl border border-slate-200 dark:border-white/10 bg-white dark:bg-[#0D1527] p-5 space-y-3 shadow-xs hover:border-purple-400 dark:hover:border-purple-500/30 transition-all">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2">
                     <span className="flex h-6 w-6 items-center justify-center rounded-full bg-purple-100 dark:bg-purple-500/20 text-purple-600 dark:text-purple-400 text-xs font-bold ring-1 ring-purple-300 dark:ring-purple-500/30">
@@ -257,7 +257,7 @@ export default function MathDeductionModal({ isOpen, onClose }) {
                 <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
                   Sustituyendo ambos flujos en la ecuación diferencial de balance y factorizando <code className="text-blue-600 dark:text-blue-300 font-mono font-bold">P(t)</code>:
                 </p>
-                <div className="p-4 rounded-xl bg-slate-100 dark:bg-slate-950/80 border border-slate-200 dark:border-white/10 space-y-2 font-mono text-xs shadow-xs">
+                <div className="p-4 rounded-xl bg-slate-100 dark:bg-[#080C14] border border-slate-200 dark:border-white/10 space-y-2 font-mono text-xs shadow-xs">
                   <div className="flex items-center gap-2 text-slate-800 dark:text-slate-300">
                     <span className="text-blue-600 dark:text-blue-400 font-bold">dP / dt</span>
                     <span>=</span>
@@ -271,7 +271,7 @@ export default function MathDeductionModal({ isOpen, onClose }) {
                   <div className="text-slate-500 text-[11px] font-sans pt-1">
                     Integrando por el método clásico de separación de variables:
                   </div>
-                  <div className="flex items-center gap-3 text-slate-800 dark:text-slate-200 bg-white dark:bg-slate-900/60 p-2.5 rounded-lg border border-slate-200 dark:border-white/5 shadow-xs">
+                  <div className="flex items-center gap-3 text-slate-800 dark:text-slate-200 bg-white dark:bg-[#0D1527] p-2.5 rounded-lg border border-slate-200 dark:border-white/10 shadow-xs">
                     <span>∫ (1 / P) dP = ∫ r dt</span>
                     <span>⇒</span>
                     <span>ln(P) = r·t + C</span>
@@ -282,7 +282,7 @@ export default function MathDeductionModal({ isOpen, onClose }) {
               </div>
 
               {/* Step 5 */}
-              <div className="rounded-2xl border border-slate-200 dark:border-white/10 bg-white dark:bg-slate-900/40 p-5 space-y-3 shadow-xs hover:border-amber-400 dark:hover:border-yellow-500/30 transition-all">
+              <div className="rounded-2xl border border-slate-200 dark:border-white/10 bg-white dark:bg-[#0D1527] p-5 space-y-3 shadow-xs hover:border-amber-400 dark:hover:border-yellow-500/30 transition-all">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2">
                     <span className="flex h-6 w-6 items-center justify-center rounded-full bg-amber-100 dark:bg-yellow-500/20 text-amber-600 dark:text-yellow-400 text-xs font-bold ring-1 ring-amber-300 dark:ring-yellow-500/30">
@@ -300,7 +300,7 @@ export default function MathDeductionModal({ isOpen, onClose }) {
                   Las computadoras no resuelven ecuaciones diferenciales continuas de forma analítica en cada iteración de un sistema no lineal complejo; en su lugar, dividen el horizonte temporal en pequeños pasos discretos de integración <code className="text-amber-700 dark:text-yellow-300 font-mono font-bold">dt</code> (o <code className="text-amber-700 dark:text-yellow-300 font-mono font-bold">Δt</code>).
                   Aproximando la derivada por diferencias finitas hacia adelante:
                 </p>
-                <div className="p-4 rounded-xl bg-slate-100 dark:bg-slate-950/80 border border-slate-200 dark:border-white/10 space-y-2 font-mono text-xs shadow-xs">
+                <div className="p-4 rounded-xl bg-slate-100 dark:bg-[#080C14] border border-slate-200 dark:border-white/10 space-y-2 font-mono text-xs shadow-xs">
                   <div className="flex items-center gap-2 text-slate-700 dark:text-slate-300">
                     <span>dP / dt ≈ [ P(t + dt) - P(t) ] / dt = Nacimientos(t) - Defunciones(t)</span>
                   </div>
@@ -314,7 +314,7 @@ export default function MathDeductionModal({ isOpen, onClose }) {
                   <div className="text-slate-500 text-[11px] font-sans pt-1">
                     Sustituyendo los valores del Caso 5.1 con <code className="text-amber-700 dark:text-yellow-300 font-mono font-bold">dt = 1 año</code>:
                   </div>
-                  <div className="p-2.5 rounded-lg bg-white dark:bg-slate-900/60 border border-slate-200 dark:border-white/5 text-emerald-700 dark:text-emerald-400 font-bold shadow-xs">
+                  <div className="p-2.5 rounded-lg bg-white dark:bg-[#0D1527] border border-slate-200 dark:border-white/10 text-emerald-700 dark:text-emerald-400 font-bold shadow-xs">
                     P(t + 1) = P(t) + [ 0.05·P(t) - 0.01·P(t) ] × 1 = P(t) × (1 + 0.04) = P(t) × 1.04
                   </div>
                   <div className="text-[11px] text-slate-500 font-sans italic">
@@ -327,7 +327,7 @@ export default function MathDeductionModal({ isOpen, onClose }) {
 
           {activeTab === 'compare' && (
             <div className="space-y-5">
-              <div className="rounded-2xl border border-slate-200 dark:border-white/10 bg-white dark:bg-slate-900/40 p-5 space-y-4 shadow-xs">
+              <div className="rounded-2xl border border-slate-200 dark:border-white/10 bg-white dark:bg-[#0D1527] p-5 space-y-4 shadow-xs">
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                   <div>
                     <h3 className="text-sm font-bold text-slate-900 dark:text-slate-100 flex items-center gap-2">
@@ -340,7 +340,7 @@ export default function MathDeductionModal({ isOpen, onClose }) {
                   </div>
 
                   {/* dt selector */}
-                  <div className="flex items-center gap-2 bg-slate-100 dark:bg-slate-950/80 p-1.5 rounded-xl border border-slate-200 dark:border-white/10 shrink-0">
+                  <div className="flex items-center gap-2 bg-slate-100 dark:bg-[#080C14] p-1.5 rounded-xl border border-slate-200 dark:border-white/10 shrink-0">
                     <span className="text-[11px] font-semibold text-slate-500 dark:text-slate-400 px-2">Paso (dt):</span>
                     {[0.1, 0.5, 1, 2].map((stepVal) => (
                       <button
@@ -349,7 +349,7 @@ export default function MathDeductionModal({ isOpen, onClose }) {
                         className={`px-2.5 py-1 rounded-lg text-xs font-mono font-bold transition-all cursor-pointer ${
                           interactiveDt === stepVal
                             ? 'bg-purple-600 text-white shadow-xs'
-                            : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200 hover:bg-slate-200/60 dark:hover:bg-slate-900'
+                            : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200 hover:bg-slate-200/60 dark:hover:bg-[#0D1527]'
                         }`}
                       >
                         {stepVal}
@@ -369,9 +369,9 @@ export default function MathDeductionModal({ isOpen, onClose }) {
                 </div>
 
                 {/* Comparison Table */}
-                <div className="rounded-xl border border-slate-200 dark:border-white/10 overflow-hidden bg-white dark:bg-slate-950/60 shadow-xs">
+                <div className="rounded-xl border border-slate-200 dark:border-white/10 overflow-hidden bg-white dark:bg-[#080C14] shadow-xs">
                   <table className="w-full text-xs text-left">
-                    <thead className="text-[11px] uppercase tracking-wider text-slate-500 dark:text-slate-400 bg-slate-100 dark:bg-slate-900/80 border-b border-slate-200 dark:border-white/10 font-semibold">
+                    <thead className="text-[11px] uppercase tracking-wider text-slate-500 dark:text-slate-400 bg-slate-100 dark:bg-[#0D1527] border-b border-slate-200 dark:border-white/10 font-semibold">
                       <tr>
                         <th className="px-4 py-2.5">Año (t)</th>
                         <th className="px-4 py-2.5 text-blue-600 dark:text-blue-400">Euler P(t) [dt={interactiveDt}]</th>
@@ -382,7 +382,7 @@ export default function MathDeductionModal({ isOpen, onClose }) {
                     </thead>
                     <tbody className="divide-y divide-slate-100 dark:divide-white/5 font-mono">
                       {comparisonData.map((row) => (
-                        <tr key={row.t} className="hover:bg-slate-50 dark:hover:bg-slate-900/40 transition-colors">
+                        <tr key={row.t} className="hover:bg-slate-50 dark:hover:bg-[#0D1527]/50 transition-colors">
                           <td className="px-4 py-2 font-bold text-slate-700 dark:text-slate-300">{row.t} años</td>
                           <td className="px-4 py-2 text-blue-700 dark:text-blue-300 font-semibold">
                             {row.euler.toLocaleString(undefined, { minimumFractionDigits: 1, maximumFractionDigits: 1 })}
@@ -403,13 +403,13 @@ export default function MathDeductionModal({ isOpen, onClose }) {
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs text-slate-600 dark:text-slate-300 pt-2">
-                  <div className="p-3.5 rounded-xl bg-slate-50 dark:bg-slate-950/50 border border-slate-200 dark:border-white/5 space-y-1 shadow-xs">
+                  <div className="p-3.5 rounded-xl bg-slate-50 dark:bg-[#0D1527] border border-slate-200 dark:border-white/5 space-y-1 shadow-xs">
                     <span className="text-[11px] font-bold text-slate-800 dark:text-slate-200 block">¿Por qué Euler subestima levemente el valor?</span>
                     <p className="text-slate-600 dark:text-slate-400 text-[11px] leading-relaxed">
                       El método de Euler hacia adelante calcula la pendiente al inicio de cada intervalo <code className="font-mono text-slate-800 dark:text-slate-300">t</code> y la asume constante durante todo el paso <code className="font-mono text-slate-800 dark:text-slate-300">dt</code>. En una curva convexa exponencial creciente, la derivada real aumenta continuamente, por lo que Euler siempre queda ligeramente por debajo de la curva analítica ideal.
                     </p>
                   </div>
-                  <div className="p-3.5 rounded-xl bg-slate-50 dark:bg-slate-950/50 border border-slate-200 dark:border-white/5 space-y-1 shadow-xs">
+                  <div className="p-3.5 rounded-xl bg-slate-50 dark:bg-[#0D1527] border border-slate-200 dark:border-white/5 space-y-1 shadow-xs">
                     <span className="text-[11px] font-bold text-slate-800 dark:text-slate-200 block">Recomendación para el Modelador</span>
                     <p className="text-slate-600 dark:text-slate-400 text-[11px] leading-relaxed">
                       Para garantizar estabilidad numérica y errores inferiores al 1%, el paso de integración debe cumplir la condición de Forrester: <code className="text-purple-600 dark:text-purple-300 font-mono font-bold">dt ≤ 1 / (4 · |r|)</code>. Con <code className="font-mono text-slate-800 dark:text-slate-300">r = 0.04</code>, cualquier <code className="font-mono text-slate-800 dark:text-slate-300">dt ≤ 1.0</code> garantiza excelente fidelidad.
@@ -422,7 +422,7 @@ export default function MathDeductionModal({ isOpen, onClose }) {
 
           {activeTab === 'loops' && (
             <div className="space-y-5">
-              <div className="rounded-2xl border border-slate-200 dark:border-white/10 bg-white dark:bg-slate-900/40 p-5 space-y-4 shadow-xs">
+              <div className="rounded-2xl border border-slate-200 dark:border-white/10 bg-white dark:bg-[#0A0F1D] p-5 space-y-4 shadow-xs">
                 <div>
                   <h3 className="text-sm font-bold text-slate-900 dark:text-slate-100 flex items-center gap-2">
                     <RefreshCw className="h-4 w-4 text-emerald-600 dark:text-emerald-400" />
@@ -476,7 +476,7 @@ export default function MathDeductionModal({ isOpen, onClose }) {
                 </div>
 
                 {/* Dominance conclusion */}
-                <div className="rounded-xl border border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-slate-950/70 p-4 space-y-2 shadow-xs">
+                <div className="rounded-xl border border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-[#080C14] p-4 space-y-2 shadow-xs">
                   <span className="text-xs font-bold text-slate-800 dark:text-slate-200 flex items-center gap-2">
                     <CheckCircle2 className="h-4 w-4 text-purple-600 dark:text-purple-400" />
                     Veredicto de Dominancia Estructural
@@ -491,14 +491,14 @@ export default function MathDeductionModal({ isOpen, onClose }) {
         </div>
 
         {/* Footer */}
-        <div className="flex flex-col sm:flex-row items-center justify-between gap-2 border-t border-slate-200 dark:border-white/10 px-6 py-3.5 bg-slate-50 dark:bg-slate-950/80">
+        <div className="flex flex-col sm:flex-row items-center justify-between gap-2 border-t border-slate-200 dark:border-white/10 px-6 py-3.5 bg-slate-50 dark:bg-[#080C14]">
           <div className="flex items-center gap-3 text-xs text-slate-500 dark:text-slate-400">
             <span className="flex items-center gap-1 text-purple-600 dark:text-purple-400 font-semibold">
               <Bot className="h-3.5 w-3.5" /> Desarrollado por Agentes de IA
             </span>
             <span className="hidden sm:inline text-slate-300 dark:text-slate-700">•</span>
             <span className="hidden sm:inline">
-              Presiona <kbd className="px-1.5 py-0.5 rounded border border-slate-200 dark:border-white/10 bg-white dark:bg-slate-900 font-mono text-[10px]">Esc</kbd> para volver
+              Presiona <kbd className="px-1.5 py-0.5 rounded border border-slate-200 dark:border-white/10 bg-white dark:bg-[#0D1527] font-mono text-[10px]">Esc</kbd> para volver
             </span>
           </div>
           <button

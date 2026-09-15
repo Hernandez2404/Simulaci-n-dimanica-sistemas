@@ -40,7 +40,7 @@ function CustomTooltip({ active, payload, label, isDark = true }) {
   return (
     <div className={`rounded-xl border p-3 shadow-2xl backdrop-blur-md transition-colors ${
       isDark 
-        ? 'border-white/10 bg-slate-900/90 text-slate-100' 
+        ? 'border-white/15 bg-[#0B1120]/95 text-slate-100 shadow-black/60' 
         : 'border-slate-200 bg-white/95 text-slate-800 shadow-slate-300/40'
     }`}>
       <div className={`flex items-center gap-2 border-b pb-2 mb-2 ${isDark ? 'border-white/10' : 'border-slate-100'}`}>
@@ -133,11 +133,11 @@ export default function ResultsChart({ data, isDark = true }) {
   }
 
   return (
-    <div className="flex flex-col h-full w-full overflow-hidden bg-white dark:bg-transparent transition-colors duration-200">
+    <div className="flex flex-col h-full w-full overflow-hidden bg-white dark:bg-[#0A0F1D] transition-colors duration-200">
       {/* KPI Stats Header Bar */}
       {stats && (
-        <div className="grid grid-cols-3 gap-2 p-2.5 border-b border-slate-200 dark:border-white/5 bg-slate-50/80 dark:bg-slate-950/40 shrink-0">
-          <div className="rounded-xl border border-slate-200/80 dark:border-white/5 bg-white dark:bg-slate-900/50 p-2 shadow-xs">
+        <div className="grid grid-cols-3 gap-2 p-2.5 border-b border-slate-200 dark:border-white/10 bg-slate-50/80 dark:bg-[#080C14]/80 shrink-0">
+          <div className="rounded-xl border border-slate-200/80 dark:border-white/10 bg-white dark:bg-[#0D1527] p-2 shadow-xs">
             <span className="text-[10px] uppercase font-semibold tracking-wider text-slate-500 dark:text-slate-400 block mb-0.5 truncate">
               {stats.label} Final
             </span>
@@ -152,7 +152,7 @@ export default function ResultsChart({ data, isDark = true }) {
             </div>
           </div>
 
-          <div className="rounded-xl border border-slate-200/80 dark:border-white/5 bg-white dark:bg-slate-900/50 p-2 shadow-xs">
+          <div className="rounded-xl border border-slate-200/80 dark:border-white/10 bg-white dark:bg-[#0D1527] p-2 shadow-xs">
             <span className="text-[10px] uppercase font-semibold tracking-wider text-slate-500 dark:text-slate-400 block mb-0.5 truncate">
               {stats.label} Inicial
             </span>
@@ -161,7 +161,7 @@ export default function ResultsChart({ data, isDark = true }) {
             </span>
           </div>
 
-          <div className="rounded-xl border border-slate-200/80 dark:border-white/5 bg-white dark:bg-slate-900/50 p-2 shadow-xs">
+          <div className="rounded-xl border border-slate-200/80 dark:border-white/10 bg-white dark:bg-[#0D1527] p-2 shadow-xs">
             <span className="text-[10px] uppercase font-semibold tracking-wider text-slate-500 dark:text-slate-400 block mb-0.5 truncate">
               Pico Máximo
             </span>
@@ -173,7 +173,7 @@ export default function ResultsChart({ data, isDark = true }) {
       )}
 
       {/* Series Toggle Pills - Responsive wrapping with no overflow */}
-      <div className="flex flex-wrap items-center gap-1.5 px-3 py-1.5 border-b border-slate-200 dark:border-white/5 bg-slate-50/90 dark:bg-slate-900/40 text-xs shrink-0 max-w-full">
+      <div className="flex flex-wrap items-center gap-1.5 px-3 py-1.5 border-b border-slate-200 dark:border-white/10 bg-slate-50/90 dark:bg-[#080C14]/90 text-xs shrink-0 max-w-full">
         <span className="text-[10px] uppercase font-semibold tracking-wider text-slate-400 dark:text-slate-500 mr-1 shrink-0">
           Series:
         </span>
@@ -188,8 +188,8 @@ export default function ResultsChart({ data, isDark = true }) {
                 title={visible ? `Ocultar ${cfg.label}` : `Mostrar ${cfg.label}`}
                 className={`flex items-center gap-1.5 px-2 py-0.5 rounded-lg border text-[11px] font-medium transition-all duration-150 cursor-pointer select-none shrink-0 ${
                   visible 
-                    ? 'border-slate-300 dark:border-white/10 bg-white dark:bg-slate-800/90 text-slate-800 dark:text-slate-200 hover:border-slate-400 dark:hover:border-white/20 shadow-xs'
-                    : 'border-transparent bg-slate-100/80 dark:bg-slate-900/40 text-slate-400 dark:text-slate-500 line-through hover:text-slate-600 dark:hover:text-slate-400'
+                    ? 'border-slate-300 dark:border-white/15 bg-white dark:bg-[#0D1527] text-slate-800 dark:text-slate-200 hover:border-slate-400 dark:hover:border-white/25 dark:hover:bg-[#131D35] shadow-xs'
+                    : 'border-transparent bg-slate-100/80 dark:bg-[#080C14] text-slate-400 dark:text-slate-500 line-through hover:text-slate-600 dark:hover:text-slate-400'
                 }`}
               >
                 <span 

@@ -4,9 +4,9 @@ import { Layers, Variable, ArrowDownRight, ArrowUpRight } from 'lucide-react';
 
 export const StockNode = memo(({ data }) => {
   return (
-    <div className="group relative min-w-[170px] rounded-xl border border-blue-500/50 dark:border-blue-500/40 bg-white/95 dark:bg-slate-900/90 p-3.5 shadow-lg shadow-blue-500/10 dark:shadow-blue-950/40 backdrop-blur-md transition-all duration-200 hover:border-blue-400 hover:shadow-blue-500/20">
-      <Handle type="target" position={Position.Left} id="in" className="!h-3 !w-3 !rounded-full !border-2 !border-slate-100 dark:!border-slate-900 !bg-blue-500 dark:!bg-blue-400" />
-      <Handle type="target" position={Position.Top} id="top" className="!h-2.5 !w-2.5 !rounded-full !border !border-slate-100 dark:!border-slate-900 !bg-blue-500/80 dark:!bg-blue-400/80" />
+    <div className="group relative min-w-[170px] rounded-xl border border-blue-500/50 dark:border-blue-500/40 bg-white/95 dark:bg-[#0D1527]/95 p-3.5 shadow-lg shadow-blue-500/10 dark:shadow-blue-950/40 backdrop-blur-md transition-all duration-200 hover:border-blue-400 hover:shadow-blue-500/20">
+      <Handle type="target" position={Position.Left} id="in" className="!h-3 !w-3 !rounded-full !border-2 !border-slate-100 dark:!border-[#080C14] !bg-blue-500 dark:!bg-blue-400" />
+      <Handle type="target" position={Position.Top} id="top" className="!h-2.5 !w-2.5 !rounded-full !border !border-slate-100 dark:!border-[#080C14] !bg-blue-500/80 dark:!bg-blue-400/80" />
       
       <div className="flex items-center gap-2 mb-2">
         <div className="flex h-6 w-6 items-center justify-center rounded-lg bg-blue-500/15 dark:bg-blue-500/20 text-blue-600 dark:text-blue-400 ring-1 ring-blue-500/30">
@@ -22,8 +22,8 @@ export const StockNode = memo(({ data }) => {
         </div>
       )}
 
-      <Handle type="source" position={Position.Right} id="out" className="!h-3 !w-3 !rounded-full !border-2 !border-slate-100 dark:!border-slate-900 !bg-blue-500 dark:!bg-blue-400" />
-      <Handle type="source" position={Position.Bottom} id="bottom" className="!h-2.5 !w-2.5 !rounded-full !border !border-slate-100 dark:!border-slate-900 !bg-blue-500/80 dark:!bg-blue-400/80" />
+      <Handle type="source" position={Position.Right} id="out" className="!h-3 !w-3 !rounded-full !border-2 !border-slate-100 dark:!border-[#080C14] !bg-blue-500 dark:!bg-blue-400" />
+      <Handle type="source" position={Position.Bottom} id="bottom" className="!h-2.5 !w-2.5 !rounded-full !border !border-slate-100 dark:!border-[#080C14] !bg-blue-500/80 dark:!bg-blue-400/80" />
     </div>
   );
 });
@@ -43,9 +43,9 @@ export const FlowNode = memo(({ data }) => {
   const dotColor = isOutflow ? '!bg-rose-500 dark:!bg-rose-400' : '!bg-emerald-500 dark:!bg-emerald-400';
 
   return (
-    <div className={`group relative min-w-[160px] rounded-xl border ${borderColor} bg-white/95 dark:bg-slate-900/90 p-3 shadow-lg ${shadowColor} backdrop-blur-md transition-all duration-200`}>
-      <Handle type="target" position={Position.Left} className={`!h-2.5 !w-2.5 !rounded-full !border !border-slate-100 dark:!border-slate-900 ${dotColor}`} />
-      <Handle type="target" position={Position.Top} className={`!h-2.5 !w-2.5 !rounded-full !border !border-slate-100 dark:!border-slate-900 ${dotColor}`} />
+    <div className={`group relative min-w-[160px] rounded-xl border ${borderColor} bg-white/95 dark:bg-[#0D1527]/95 p-3 shadow-lg ${shadowColor} backdrop-blur-md transition-all duration-200`}>
+      <Handle type="target" position={Position.Left} className={`!h-2.5 !w-2.5 !rounded-full !border !border-slate-100 dark:!border-[#080C14] ${dotColor}`} />
+      <Handle type="target" position={Position.Top} className={`!h-2.5 !w-2.5 !rounded-full !border !border-slate-100 dark:!border-[#080C14] ${dotColor}`} />
 
       <div className="flex items-center gap-2 mb-1.5">
         <div className={`flex h-5 w-5 items-center justify-center rounded-md ${badgeBg} ring-1`}>
@@ -63,8 +63,8 @@ export const FlowNode = memo(({ data }) => {
         </div>
       )}
 
-      <Handle type="source" position={Position.Right} className={`!h-2.5 !w-2.5 !rounded-full !border !border-slate-100 dark:!border-slate-900 ${dotColor}`} />
-      <Handle type="source" position={Position.Bottom} className={`!h-2.5 !w-2.5 !rounded-full !border !border-slate-100 dark:!border-slate-900 ${dotColor}`} />
+      <Handle type="source" position={Position.Right} className={`!h-2.5 !w-2.5 !rounded-full !border !border-slate-100 dark:!border-[#080C14] ${dotColor}`} />
+      <Handle type="source" position={Position.Bottom} className={`!h-2.5 !w-2.5 !rounded-full !border !border-slate-100 dark:!border-[#080C14] ${dotColor}`} />
     </div>
   );
 });
@@ -72,9 +72,9 @@ FlowNode.displayName = 'FlowNode';
 
 export const AuxNode = memo(({ data }) => {
   return (
-    <div className="group relative min-w-[140px] rounded-full border border-purple-500/40 dark:border-purple-500/35 bg-white/95 dark:bg-slate-900/90 px-4 py-2.5 shadow-lg shadow-purple-500/10 dark:shadow-purple-950/30 backdrop-blur-md transition-all duration-200 hover:border-purple-400 hover:shadow-purple-500/20">
-      <Handle type="target" position={Position.Top} className="!h-2.5 !w-2.5 !rounded-full !border !border-slate-100 dark:!border-slate-900 !bg-purple-500 dark:!bg-purple-400" />
-      <Handle type="target" position={Position.Left} className="!h-2.5 !w-2.5 !rounded-full !border !border-slate-100 dark:!border-slate-900 !bg-purple-500 dark:!bg-purple-400" />
+    <div className="group relative min-w-[140px] rounded-full border border-purple-500/40 dark:border-purple-500/35 bg-white/95 dark:bg-[#0D1527]/95 px-4 py-2.5 shadow-lg shadow-purple-500/10 dark:shadow-purple-950/30 backdrop-blur-md transition-all duration-200 hover:border-purple-400 hover:shadow-purple-500/20">
+      <Handle type="target" position={Position.Top} className="!h-2.5 !w-2.5 !rounded-full !border !border-slate-100 dark:!border-[#080C14] !bg-purple-500 dark:!bg-purple-400" />
+      <Handle type="target" position={Position.Left} className="!h-2.5 !w-2.5 !rounded-full !border !border-slate-100 dark:!border-[#080C14] !bg-purple-500 dark:!bg-purple-400" />
 
       <div className="flex items-center gap-2">
         <div className="flex h-5 w-5 items-center justify-center rounded-full bg-purple-500/15 dark:bg-purple-500/20 text-purple-600 dark:text-purple-300 ring-1 ring-purple-500/30">
@@ -90,8 +90,8 @@ export const AuxNode = memo(({ data }) => {
         </div>
       </div>
 
-      <Handle type="source" position={Position.Right} className="!h-2.5 !w-2.5 !rounded-full !border !border-slate-100 dark:!border-slate-900 !bg-purple-500 dark:!bg-purple-400" />
-      <Handle type="source" position={Position.Bottom} className="!h-2.5 !w-2.5 !rounded-full !border !border-slate-100 dark:!border-slate-900 !bg-purple-500 dark:!bg-purple-400" />
+      <Handle type="source" position={Position.Right} className="!h-2.5 !w-2.5 !rounded-full !border !border-slate-100 dark:!border-[#080C14] !bg-purple-500 dark:!bg-purple-400" />
+      <Handle type="source" position={Position.Bottom} className="!h-2.5 !w-2.5 !rounded-full !border !border-slate-100 dark:!border-[#080C14] !bg-purple-500 dark:!bg-purple-400" />
     </div>
   );
 });

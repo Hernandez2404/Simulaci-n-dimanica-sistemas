@@ -142,7 +142,7 @@ export default function App() {
   return (
     <div className="h-screen w-screen bg-slate-50 dark:bg-[#080C14] text-slate-900 dark:text-slate-100 flex flex-col font-sans overflow-hidden select-none transition-colors duration-200">
       {/* Precision Header */}
-      <header className="h-16 border-b border-slate-200 dark:border-white/10 flex items-center justify-between px-4 sm:px-6 bg-white/90 dark:bg-slate-900/70 backdrop-blur-xl z-20 shrink-0 shadow-xs transition-colors duration-200 gap-4">
+      <header className="h-16 border-b border-slate-200 dark:border-white/10 flex items-center justify-between px-4 sm:px-6 bg-white/90 dark:bg-[#0B1120]/90 backdrop-blur-xl z-20 shrink-0 shadow-xs transition-colors duration-200 gap-4">
         {/* Left: Brand, Version & AI Credits */}
         <div className="flex items-center gap-3.5 min-w-0">
           <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-blue-600 to-indigo-700 text-white shadow-md shadow-blue-500/25 ring-1 ring-white/20">
@@ -175,7 +175,7 @@ export default function App() {
             <select
               value={selectedModelId}
               onChange={(e) => loadModel(e.target.value)}
-              className="appearance-none rounded-xl border border-slate-300 dark:border-white/10 bg-white dark:bg-slate-800/90 px-3.5 py-2 pr-8 text-xs font-semibold text-slate-800 dark:text-slate-200 shadow-xs hover:border-slate-400 dark:hover:border-white/20 focus:outline-none focus:ring-2 focus:ring-blue-500/40 cursor-pointer transition-colors"
+              className="appearance-none rounded-xl border border-slate-300 dark:border-white/10 bg-white dark:bg-[#0D1527] px-3.5 py-2 pr-8 text-xs font-semibold text-slate-800 dark:text-slate-200 shadow-xs hover:border-slate-400 dark:hover:border-white/20 focus:outline-none focus:ring-2 focus:ring-blue-500/40 cursor-pointer transition-colors"
             >
               <option value="poblacion">Caso 5.1: Dinámica Poblacional</option>
               <option value="helpdesk">Caso 5.2: Mesa de Ayuda TI</option>
@@ -202,7 +202,7 @@ export default function App() {
             <button 
               onClick={() => setIsModalOpen(true)}
               title="Ver guía de ejercicios prácticos y preguntas"
-              className="flex items-center gap-1.5 rounded-xl border border-slate-200 dark:border-white/10 bg-white dark:bg-slate-800/60 hover:bg-slate-100 dark:hover:bg-slate-750 px-3 py-2 text-xs font-semibold text-slate-700 dark:text-slate-200 hover:border-slate-300 dark:hover:border-white/25 active:scale-95 transition-all shadow-xs cursor-pointer"
+              className="flex items-center gap-1.5 rounded-xl border border-slate-200 dark:border-white/10 bg-white dark:bg-[#0D1527] hover:bg-slate-100 dark:hover:bg-[#131D35] px-3 py-2 text-xs font-semibold text-slate-700 dark:text-slate-200 hover:border-slate-300 dark:hover:border-white/25 active:scale-95 transition-all shadow-xs cursor-pointer"
             >
               <BookOpen className="h-3.5 w-3.5 text-blue-600 dark:text-blue-400" />
               <span className="hidden xl:inline">Guía de Ejercicios</span>
@@ -218,7 +218,7 @@ export default function App() {
             <button 
               onClick={handleReset}
               title="Restablecer valores iniciales del modelo y diagrama"
-              className="flex items-center gap-1.5 rounded-xl border border-slate-200 dark:border-white/10 bg-white dark:bg-slate-800/60 hover:bg-slate-100 dark:hover:bg-slate-700/60 px-3 py-2 text-xs font-medium text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-slate-100 active:scale-95 transition-all cursor-pointer shadow-xs group"
+              className="flex items-center gap-1.5 rounded-xl border border-slate-200 dark:border-white/10 bg-white dark:bg-[#0D1527] hover:bg-slate-100 dark:hover:bg-[#131D35] px-3 py-2 text-xs font-medium text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-slate-100 active:scale-95 transition-all cursor-pointer shadow-xs group"
             >
               <RotateCcw className="h-3.5 w-3.5 text-slate-500 dark:text-slate-400 group-hover:rotate-[-45deg] transition-transform duration-200" />
               <span className="hidden sm:inline">Reset</span>
@@ -245,7 +245,7 @@ export default function App() {
             onClick={toggleTheme}
             title={isDark ? "Cambiar a Modo Claro" : "Cambiar a Modo Oscuro"}
             aria-label={isDark ? "Activar Modo Claro" : "Activar Modo Oscuro"}
-            className="flex h-9 w-9 items-center justify-center rounded-xl border border-slate-200 dark:border-white/10 bg-white dark:bg-slate-800/60 hover:bg-slate-100 dark:hover:bg-slate-700/60 text-slate-700 dark:text-amber-300 hover:text-slate-900 dark:hover:text-amber-200 active:scale-95 transition-all shadow-xs cursor-pointer"
+            className="flex h-9 w-9 items-center justify-center rounded-xl border border-slate-200 dark:border-white/10 bg-white dark:bg-[#0D1527] hover:bg-slate-100 dark:hover:bg-[#131D35] text-slate-700 dark:text-amber-300 hover:text-slate-900 dark:hover:text-amber-200 active:scale-95 transition-all shadow-xs cursor-pointer"
           >
             {isDark ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4 text-indigo-600" />}
           </button>
@@ -253,7 +253,7 @@ export default function App() {
       </header>
 
       {/* Main Studio View */}
-      <main className="flex-1 flex overflow-hidden p-5 gap-5 transition-colors duration-200 bg-slate-100/70 dark:bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] dark:from-slate-900/40 dark:via-[#080C14] dark:to-[#080C14]">
+      <main className="flex-1 flex overflow-hidden p-5 gap-5 transition-colors duration-200 bg-slate-100/70 dark:bg-[#080C14] dark:bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] dark:from-[#0B1120]/60 dark:via-[#080C14] dark:to-[#080C14]">
         {/* Left Column: Diagram Canvas */}
         <div className="flex-[3] flex flex-col gap-3 min-w-0">
           <div className="flex items-center justify-between px-1">
@@ -264,13 +264,13 @@ export default function App() {
               </h2>
             </div>
             <div className="flex items-center gap-2">
-              <span className="text-[11px] font-medium text-slate-600 dark:text-slate-400 bg-white dark:bg-slate-900/60 px-2.5 py-0.5 rounded-md border border-slate-200 dark:border-white/5 shadow-xs">
+              <span className="text-[11px] font-medium text-slate-600 dark:text-slate-400 bg-white dark:bg-[#0A0F1D] px-2.5 py-0.5 rounded-md border border-slate-200 dark:border-white/10 shadow-xs">
                 {activeModelConfig.category}
               </span>
             </div>
           </div>
 
-          <div className="flex-1 rounded-2xl border border-slate-200 dark:border-white/10 bg-white dark:bg-slate-950/70 overflow-hidden shadow-xl dark:shadow-2xl backdrop-blur-md relative transition-colors duration-200">
+          <div className="flex-1 rounded-2xl border border-slate-200 dark:border-white/10 bg-white dark:bg-[#0A0F1D] overflow-hidden shadow-xl dark:shadow-2xl backdrop-blur-md relative transition-colors duration-200">
             <DiagramCanvas 
               nodesExt={nodes} 
               edgesExt={edges} 
@@ -296,7 +296,7 @@ export default function App() {
               </div>
             </div>
 
-            <div className="flex-1 rounded-2xl border border-slate-200 dark:border-white/10 bg-white dark:bg-slate-950/70 overflow-hidden shadow-xl dark:shadow-2xl backdrop-blur-md flex flex-col transition-colors duration-200">
+            <div className="flex-1 rounded-2xl border border-slate-200 dark:border-white/10 bg-white dark:bg-[#0A0F1D] overflow-hidden shadow-xl dark:shadow-2xl backdrop-blur-md flex flex-col transition-colors duration-200">
               <ResultsChart data={simulationData} isDark={isDark} />
             </div>
           </div>
@@ -305,7 +305,7 @@ export default function App() {
           <div className="h-[250px] flex flex-col gap-2 shrink-0">
             {/* Tab Navigation */}
             <div className="flex items-center justify-between px-1">
-              <div className="flex items-center gap-1.5 p-0.5 rounded-xl bg-slate-200/70 dark:bg-slate-900/80 border border-slate-300/60 dark:border-white/10">
+              <div className="flex items-center gap-1.5 p-0.5 rounded-xl bg-slate-200/70 dark:bg-[#0A0F1D] border border-slate-300/60 dark:border-white/10">
                 <button
                   onClick={() => setActiveTab('params')}
                   className={`flex items-center gap-1.5 px-3 py-1 rounded-lg text-xs font-medium transition-all cursor-pointer ${
@@ -346,7 +346,7 @@ export default function App() {
                   <button
                     onClick={handleReset}
                     title="Restablecer valores originales de los parámetros"
-                    className="flex items-center gap-1 px-2 py-0.5 rounded-md border border-slate-200 dark:border-white/10 bg-slate-100 dark:bg-slate-800/80 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-600 dark:text-slate-300 transition-all active:scale-95 cursor-pointer shadow-2xs group"
+                    className="flex items-center gap-1 px-2 py-0.5 rounded-md border border-slate-200 dark:border-white/10 bg-slate-100 dark:bg-[#0D1527] hover:bg-slate-200 dark:hover:bg-[#131D35] text-slate-600 dark:text-slate-300 transition-all active:scale-95 cursor-pointer shadow-2xs group"
                   >
                     <RotateCcw className="h-2.5 w-2.5 group-hover:rotate-[-45deg] transition-transform duration-200" />
                     <span>Reset</span>
@@ -357,7 +357,7 @@ export default function App() {
             </div>
 
             {/* Tab Contents Container */}
-            <div className="flex-1 rounded-2xl border border-slate-200 dark:border-white/10 bg-white dark:bg-slate-950/80 p-4 overflow-y-auto shadow-xs dark:shadow-inner backdrop-blur-md transition-colors duration-200">
+            <div className="flex-1 rounded-2xl border border-slate-200 dark:border-white/10 bg-white dark:bg-[#0A0F1D] p-4 overflow-y-auto shadow-xs dark:shadow-inner backdrop-blur-md transition-colors duration-200">
               {activeTab === 'params' && (
                 <div className="space-y-3">
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
@@ -365,7 +365,7 @@ export default function App() {
                       const val = paramValues[param.key] !== undefined ? paramValues[param.key] : param.default;
 
                       return (
-                        <div key={param.key} className="p-2.5 rounded-xl bg-slate-50 dark:bg-slate-900/50 border border-slate-200/80 dark:border-white/5 space-y-1.5 shadow-xs">
+                        <div key={param.key} className="p-2.5 rounded-xl bg-slate-50 dark:bg-[#0D1527] border border-slate-200/80 dark:border-white/10 space-y-1.5 shadow-xs">
                           <div className="flex items-center justify-between text-xs">
                             <span className="text-slate-700 dark:text-slate-300 font-medium truncate max-w-[150px]" title={param.label}>
                               {param.label}
@@ -381,7 +381,7 @@ export default function App() {
                             step={param.step}
                             value={val}
                             onChange={(e) => handleParamChange(param.key, e.target.value)}
-                            className="w-full h-1.5 bg-slate-200 dark:bg-slate-800 rounded-lg appearance-none cursor-pointer accent-blue-600 dark:accent-blue-500 focus:outline-none"
+                            className="w-full h-1.5 bg-slate-200 dark:bg-[#131D35] rounded-lg appearance-none cursor-pointer accent-blue-600 dark:accent-blue-500 focus:outline-none"
                           />
                         </div>
                       );
@@ -396,7 +396,7 @@ export default function App() {
                     Estructura diferencial simulada mediante el método de integración de Euler:
                   </div>
                   {activeModelConfig.equations.map((eq, i) => (
-                    <div key={i} className="flex items-start gap-2 p-2 rounded-lg bg-slate-50 dark:bg-slate-900/60 border border-slate-200 dark:border-white/5 shadow-xs">
+                    <div key={i} className="flex items-start gap-2 p-2 rounded-lg bg-slate-50 dark:bg-[#0D1527] border border-slate-200 dark:border-white/10 shadow-xs">
                       <span className={`font-semibold w-28 shrink-0 ${
                         eq.type === 'stock' ? 'text-blue-600 dark:text-blue-400' :
                         eq.type === 'inflow' ? 'text-emerald-600 dark:text-emerald-400' :
@@ -420,7 +420,7 @@ export default function App() {
                       </div>
 
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-xs">
-                        <div className="p-2.5 rounded-xl bg-slate-50 dark:bg-slate-900/60 border border-slate-200 dark:border-white/5 space-y-1 shadow-xs">
+                        <div className="p-2.5 rounded-xl bg-slate-50 dark:bg-[#0D1527] border border-slate-200 dark:border-white/10 space-y-1 shadow-xs">
                           <span className="text-[10px] font-semibold text-slate-500 dark:text-slate-400 uppercase block">1. Ecuación Continua Diferencial</span>
                           <code className="font-mono text-purple-700 dark:text-purple-300 text-[11px] block font-bold">
                             dP/dt = P·(0.05 - 0.01) = 0.04·P
@@ -430,7 +430,7 @@ export default function App() {
                           </span>
                         </div>
 
-                        <div className="p-2.5 rounded-xl bg-slate-50 dark:bg-slate-900/60 border border-slate-200 dark:border-white/5 space-y-1 shadow-xs">
+                        <div className="p-2.5 rounded-xl bg-slate-50 dark:bg-[#0D1527] border border-slate-200 dark:border-white/10 space-y-1 shadow-xs">
                           <span className="text-[10px] font-semibold text-slate-500 dark:text-slate-400 uppercase block">2. Algoritmo Euler Discreto</span>
                           <code className="font-mono text-emerald-700 dark:text-emerald-300 text-[11px] block font-bold">
                             P(t + dt) = P(t) + [N - D] × dt
@@ -446,7 +446,7 @@ export default function App() {
                       <span className="text-[11px] text-slate-500 dark:text-slate-400 font-medium block">
                         Deducción del modelo lineal de tickets:
                       </span>
-                      <div className="p-2.5 rounded-xl bg-slate-50 dark:bg-slate-900/60 border border-slate-200 dark:border-white/5 space-y-1 font-mono text-xs shadow-xs">
+                      <div className="p-2.5 rounded-xl bg-slate-50 dark:bg-[#0D1527] border border-slate-200 dark:border-white/10 space-y-1 font-mono text-xs shadow-xs">
                         <div className="text-slate-700 dark:text-slate-300">dT/dt = Llegadas - Resoluciones = 20 - 25 = -5 tickets/día</div>
                         <div className="text-emerald-600 dark:text-emerald-400 font-bold">T(t) = 50 - 5·t  ⇒  Agotamiento total en t = 10 días</div>
                       </div>
@@ -456,7 +456,7 @@ export default function App() {
                       <span className="text-[11px] text-slate-500 dark:text-slate-400 font-medium block">
                         Deducción del equilibrio asintótico del inventario:
                       </span>
-                      <div className="p-2.5 rounded-xl bg-slate-50 dark:bg-slate-900/60 border border-slate-200 dark:border-white/5 space-y-1 font-mono text-xs shadow-xs">
+                      <div className="p-2.5 rounded-xl bg-slate-50 dark:bg-[#0D1527] border border-slate-200 dark:border-white/10 space-y-1 font-mono text-xs shadow-xs">
                         <div className="text-slate-700 dark:text-slate-300">dI/dt = Envíos - 0.15·I(t) = 50 - 0.15·I(t)</div>
                         <div className="text-purple-700 dark:text-purple-300 font-bold">Estado Estacionario (dI/dt = 0): I* = 50 / 0.15 ≈ 333.33 pares</div>
                       </div>
@@ -470,7 +470,7 @@ export default function App() {
       </main>
 
       {/* Persistent Footer with AI Agent Credits */}
-      <footer className="h-7 border-t flex items-center justify-between px-6 text-[11px] shrink-0 transition-colors duration-200 bg-white/95 dark:bg-slate-950/80 border-slate-200 dark:border-white/10 text-slate-500 dark:text-slate-400 shadow-xs">
+      <footer className="h-7 border-t flex items-center justify-between px-6 text-[11px] shrink-0 transition-colors duration-200 bg-white/95 dark:bg-[#070A10] border-slate-200 dark:border-white/10 text-slate-500 dark:text-slate-400 shadow-xs">
         <div className="flex items-center gap-2">
           <Bot className="h-3.5 w-3.5 text-purple-600 dark:text-purple-400" />
           <span>Desarrollado integralmente por <strong>Agentes de IA</strong></span>

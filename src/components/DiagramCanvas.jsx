@@ -22,7 +22,7 @@ export default function DiagramCanvas({ onNodesChangeExt, onEdgesChangeExt, node
   );
 
   return (
-    <div className="relative w-full h-full bg-slate-100/70 dark:bg-[#080C14] overflow-hidden transition-colors duration-200">
+    <div className="relative w-full h-full bg-slate-50 dark:bg-[#080C14] overflow-hidden transition-colors duration-200">
       <ReactFlow
         nodes={nodesExt}
         edges={edgesExt}
@@ -31,6 +31,7 @@ export default function DiagramCanvas({ onNodesChangeExt, onEdgesChangeExt, node
         onEdgesChange={onEdgesChangeExt}
         onConnect={onConnect}
         colorMode={isDark ? 'dark' : 'light'}
+        style={{ backgroundColor: isDark ? '#080C14' : '#F8FAFC' }}
         fitView
         fitViewOptions={{ padding: 0.25 }}
         minZoom={0.5}
@@ -46,7 +47,7 @@ export default function DiagramCanvas({ onNodesChangeExt, onEdgesChangeExt, node
       </ReactFlow>
 
       {/* Legend Badge */}
-      <div className="absolute bottom-4 left-4 z-10 flex items-center gap-3 rounded-xl border border-slate-200 dark:border-white/10 bg-white/90 dark:bg-slate-900/85 px-3 py-2 text-[11px] font-medium text-slate-600 dark:text-slate-400 shadow-xl backdrop-blur-md transition-colors duration-200">
+      <div className="absolute bottom-4 left-4 z-10 flex items-center gap-3 rounded-xl border border-slate-200 dark:border-white/10 bg-white/95 dark:bg-[#0B1120]/90 px-3 py-2 text-[11px] font-medium text-slate-600 dark:text-slate-400 shadow-xl backdrop-blur-md transition-colors duration-200">
         <span className="text-slate-400 dark:text-slate-500 font-semibold uppercase tracking-wider text-[10px]">Leyenda:</span>
         <div className="flex items-center gap-1.5 text-blue-600 dark:text-blue-400">
           <Layers className="h-3 w-3" />

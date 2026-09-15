@@ -54,14 +54,32 @@ html.light body, html:not(.dark) body {
   scrollbar-width: none;
 }
 
-/* React Flow Canvas Enhancements */
+/* React Flow Canvas Theme Consistency */
+.react-flow.dark {
+  background-color: #080C14 !important;
+  --xy-background-color: #080C14 !important;
+  --xy-background-color-default: #080C14 !important;
+}
+
+.react-flow.light {
+  background-color: #F8FAFC !important;
+  --xy-background-color: #F8FAFC !important;
+  --xy-background-color-default: #F8FAFC !important;
+}
+
 .react-flow__controls {
   box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5);
   border-radius: 12px !important;
   overflow: hidden;
   border: 1px solid rgba(255, 255, 255, 0.1);
-  background: rgba(15, 23, 42, 0.85) !important;
+  background: rgba(15, 23, 42, 0.9) !important;
   backdrop-filter: blur(12px);
+}
+
+html.light .react-flow__controls {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  background: rgba(255, 255, 255, 0.95) !important;
 }
 
 .react-flow__controls-button {
@@ -72,9 +90,20 @@ html.light body, html:not(.dark) body {
   transition: all 0.15s ease;
 }
 
+html.light .react-flow__controls-button {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06) !important;
+  fill: #64748B !important;
+  color: #64748B !important;
+}
+
 .react-flow__controls-button:hover {
   background: rgba(255, 255, 255, 0.08) !important;
   fill: #F8FAFC !important;
+}
+
+html.light .react-flow__controls-button:hover {
+  background: rgba(0, 0, 0, 0.05) !important;
+  fill: #0F172A !important;
 }
 
 .react-flow__controls-button:last-child {
@@ -84,4 +113,5 @@ html.light body, html:not(.dark) body {
 .react-flow__attribution {
   display: none;
 }
+
 
